@@ -1,0 +1,187 @@
+table dUsuario
+	lineageTag: 050d7d8f-6cd7-495e-a473-37dbb0805ba2
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: bf55b4f6-d6cc-41db-b1bb-5af2e6eadb12
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: 2279e7d8-6dce-4df3-acf3-bac1ece86bae
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column CPF
+		dataType: string
+		lineageTag: c906d7b7-3a6f-46e4-b260-2adfe9cc9a89
+		summarizeBy: none
+		sourceColumn: CPF
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: 98d44bd6-5f80-4fc7-bea3-30ab29f13e67
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ativo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7f205d09-f834-4b9b-854b-fa51fde29b10
+		summarizeBy: none
+		sourceColumn: Ativo
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataCadastro
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d4687cd2-c41b-4c4e-aa62-a0dba90f994c
+		summarizeBy: none
+		sourceColumn: DataCadastro
+
+		variation Variation
+			isDefault
+			relationship: 460a6eec-210e-4887-9e45-1da95f1ce329
+			defaultHierarchy: LocalDateTable_1679d504-b958-4c57-abca-749c0b535fc6.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataDesativado
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5655f45f-3070-42a8-b730-51e59929ef65
+		summarizeBy: none
+		sourceColumn: DataDesativado
+
+		variation Variation
+			isDefault
+			relationship: 6854bb6a-34dd-4edd-bd6a-5e1bed31d228
+			defaultHierarchy: LocalDateTable_59803864-996a-4df8-9305-b295317395be.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column RG
+		dataType: string
+		lineageTag: 34a05bb7-887c-4e13-a5f1-15d3f65b9251
+		summarizeBy: none
+		sourceColumn: RG
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataNascimento
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 40c76eed-10af-4f18-bf13-e67be301b91e
+		summarizeBy: none
+		sourceColumn: DataNascimento
+
+		variation Variation
+			isDefault
+			relationship: a50eb98e-dfc5-414c-842a-1ed8a34ce337
+			defaultHierarchy: LocalDateTable_a4a13359-4ff4-460b-8d57-ddc2ef8734a4.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sexo
+		dataType: string
+		lineageTag: f53b26c7-26b6-4983-9599-be24dbc7fd77
+		summarizeBy: none
+		sourceColumn: Sexo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Telefone
+		dataType: string
+		lineageTag: c335ea28-761e-4b4b-9676-9d1e2bb6d98b
+		summarizeBy: none
+		sourceColumn: Telefone
+
+		annotation SummarizationSetBy = Automatic
+
+	column Celular
+		dataType: string
+		lineageTag: 48c39ce0-6141-4ea4-9c1e-4a714bd54405
+		summarizeBy: none
+		sourceColumn: Celular
+
+		annotation SummarizationSetBy = Automatic
+
+	column UsuarioSuperiorId
+		dataType: int64
+		formatString: 0
+		lineageTag: 09f9ef9f-f1f9-47ab-883f-f2e4164dfe76
+		summarizeBy: count
+		sourceColumn: UsuarioSuperiorId
+
+		annotation SummarizationSetBy = Automatic
+
+	column LoginUsuario
+		dataType: string
+		lineageTag: ea4beb8e-240b-4945-a617-f849ec21c5b1
+		summarizeBy: none
+		sourceColumn: LoginUsuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: 4b4d8828-3f9e-4a18-94f3-c3706040a67d
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column FlgExigePrimeiroLogin
+		dataType: string
+		lineageTag: b68f4928-9061-4b0d-9db9-110c401d9cb8
+		summarizeBy: none
+		sourceColumn: FlgExigePrimeiroLogin
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataAtualizacao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 289a9b12-532a-4a02-8d25-9890248b3655
+		summarizeBy: none
+		sourceColumn: DataAtualizacao
+
+		variation Variation
+			isDefault
+			relationship: f8067748-9abb-44ca-8dde-5ac7e9aaef02
+			defaultHierarchy: LocalDateTable_4a553ca1-290e-4d20-9d3b-a4e462692b18.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnidadeNegocio
+		dataType: string
+		lineageTag: 71f43c80-0a5d-454c-aba5-ba50ee5f403d
+		summarizeBy: none
+		sourceColumn: UnidadeNegocio
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dUsuario = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd"),
+				    dbo_Usuario = Fonte{[Schema="dbo",Item="Usuario"]}[Data]
+				in
+				    dbo_Usuario
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

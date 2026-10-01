@@ -1,0 +1,130 @@
+table fBoleto
+	lineageTag: 3ea5e9df-ca05-4036-93b0-2a1c822b8e3d
+
+	column id_Campaign
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ed6b8ff-b4de-4c33-a6f3-4edf84986320
+		summarizeBy: none
+		sourceColumn: id_Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign
+		dataType: string
+		lineageTag: c997aeac-c3cd-44be-ae2e-406a11ce348c
+		summarizeBy: none
+		sourceColumn: Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantName
+		dataType: string
+		lineageTag: a7cdc277-3431-4658-a914-74d9ba663ead
+		summarizeBy: none
+		sourceColumn: ParticipantName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantCPFCNPJ
+		dataType: string
+		lineageTag: 7c612a9c-80d8-4f1d-9c4b-ee93c559d062
+		summarizeBy: none
+		sourceColumn: ParticipantCPFCNPJ
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantEmail
+		dataType: string
+		lineageTag: 414940f1-7867-49ad-9537-75d668fa16df
+		summarizeBy: none
+		sourceColumn: ParticipantEmail
+
+		annotation SummarizationSetBy = Automatic
+
+	column BoletoAmount
+		dataType: double
+		lineageTag: dc5f7af7-2539-46e7-a76f-22fda66ccb6f
+		summarizeBy: sum
+		sourceColumn: BoletoAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BoletoFeeAmount
+		dataType: double
+		lineageTag: 99f8826c-58fd-4cd4-b369-7e81142fdc00
+		summarizeBy: sum
+		sourceColumn: BoletoFeeAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BoletoPointsAmount
+		dataType: double
+		lineageTag: dad06fb8-e59f-40bf-8e6d-fcf625d26deb
+		summarizeBy: sum
+		sourceColumn: BoletoPointsAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ConversionFactor
+		dataType: double
+		lineageTag: e9fe43bf-4c56-4eae-9947-439d6f3f2c24
+		summarizeBy: sum
+		sourceColumn: ConversionFactor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BoletoType
+		dataType: string
+		lineageTag: 1b026a15-17d7-4bad-844c-9dfa5de8667b
+		summarizeBy: none
+		sourceColumn: BoletoType
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedAt
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 8fb5f740-7d59-42bb-81f6-b4ca315d6a31
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PaymentVoucher
+		dataType: string
+		isHidden
+		lineageTag: bad2987b-130d-49d3-bd14-15a0e4c5660d
+		summarizeBy: none
+		sourceColumn: PaymentVoucher
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fBoleto = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd", [Query="SELECT#(lf)#(tab)    c.id as 'id_Campaign',#(lf)        c.Nome as 'Campaign',#(lf)        b.NOME as 'ParticipantName',#(lf)        b.CPFCNPJ as 'ParticipantCPFCNPJ',#(lf)        b.EMAIL as 'ParticipantEmail',#(lf)        b.VALOR_BOLETO as 'BoletoAmount',#(lf)        b.VALOR_BOLETO_TAXA as 'BoletoFeeAmount',#(lf)        b.VALOR_BOLETO_PONTOS as 'BoletoPointsAmount',#(lf)        b.FATOR_CONVERSAO as 'ConversionFactor',#(lf)        db.TYPE as 'BoletoType',#(lf)        b.CREATED_AT as 'CreatedAt',#(lf)        b.URL_PAYMENT_VOUCHER as 'PaymentVoucher'#(lf)#(lf)    FROM dbo.BOLETO b#(lf)        INNER JOIN dbo.BOLETO_DETALHE db ON db.ID_BOLETO = b.ID#(lf)        INNER JOIN dbo.Campanha c ON c.Id = b.ID_CAMPANHA#(lf)    WHERE b.STATUS_TRANSFEERA <> 'CANCELADO'#(lf)#(lf)    ORDER BY b.CREATED_AT DESC, b.ID"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"CreatedAt", type date}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Tipo Alterado",".","",Replacer.ReplaceText,{"ParticipantCPFCNPJ"}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído","-","",Replacer.ReplaceText,{"ParticipantCPFCNPJ"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Valor Substituído1", each [CreatedAt] > #date(2021, 12, 31))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

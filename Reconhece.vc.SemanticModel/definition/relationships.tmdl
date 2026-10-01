@@ -1,0 +1,228 @@
+relationship e3620199-2a30-4cba-a5a7-10fa69204668
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dCampanha.DataInicio
+	toColumn: LocalDateTable_7f50222e-a672-4891-b6a3-3e1aad693e08.Date
+
+relationship cfc29032-c52f-4fe5-a428-6bac80a9c817
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dCampanha.DataFim
+	toColumn: LocalDateTable_702c23d2-6b79-4a8b-b47a-5b1409bd0e2e.Date
+
+relationship 460a6eec-210e-4887-9e45-1da95f1ce329
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dUsuario.DataCadastro
+	toColumn: LocalDateTable_1679d504-b958-4c57-abca-749c0b535fc6.Date
+
+relationship 6854bb6a-34dd-4edd-bd6a-5e1bed31d228
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dUsuario.DataDesativado
+	toColumn: LocalDateTable_59803864-996a-4df8-9305-b295317395be.Date
+
+relationship a50eb98e-dfc5-414c-842a-1ed8a34ce337
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dUsuario.DataNascimento
+	toColumn: LocalDateTable_a4a13359-4ff4-460b-8d57-ddc2ef8734a4.Date
+
+relationship f8067748-9abb-44ca-8dde-5ac7e9aaef02
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dUsuario.DataAtualizacao
+	toColumn: LocalDateTable_4a553ca1-290e-4d20-9d3b-a4e462692b18.Date
+
+relationship d6ff4649-1ff7-44d3-9c50-e17aa8fc5d7b
+	fromColumn: dUsuarioCampanha.CampanhaId
+	toColumn: dCampanha.Id
+
+	annotation PBI_IsFromSource = FS
+
+relationship b6e1adc3-cb41-4d8c-8150-aaf8f863c075
+	crossFilteringBehavior: bothDirections
+	fromColumn: dUsuarioCampanha.UsuarioId
+	toColumn: dUsuario.Id
+
+	annotation PBI_IsFromSource = FS
+
+relationship 6bac0e1d-9156-46e8-85d5-1176cec6ca98
+	fromColumn: fSiteAcesso.CampanhaId
+	toColumn: dCampanha.Id
+
+	annotation PBI_IsFromSource = FS
+
+relationship 8a97d43a-a436-8cbe-0eaf-d1eb60cc950e
+	fromColumn: fSiteAcesso.CPF
+	toColumn: dUsuario.CPF
+
+relationship 3ed2f102-3215-4f23-87e8-0ad44c87657c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fSiteAcesso.DataCadastro
+	toColumn: LocalDateTable_03e03fbf-993f-423f-8fa9-344dd7378407.Date
+
+relationship 33d6d7c9-1f4b-cc7e-fd2b-0a1d463db3ba
+	fromColumn: fPedido_recarga_mobile_topup.id_Campaign
+	toColumn: dCampanha.Id
+
+relationship a4a6327e-dc2e-9271-b722-c9e81207c8ee
+	fromColumn: fPedido_item.id_Campaign
+	toColumn: dCampanha.Id
+
+relationship a5dd5469-b072-2738-2172-654dcb11d465
+	fromColumn: fNovos_cartoes_recarga.id_Campaign
+	toColumn: dCampanha.Id
+
+relationship 1fa086f9-302d-5300-8281-5e3750c31237
+	fromColumn: fCartao_recarga.id_Campaign
+	toColumn: dCampanha.Id
+
+relationship 60c53bec-2c32-4a1a-5c3d-c21ac30c5509
+	fromColumn: fBoleto.id_Campaign
+	toColumn: dCampanha.Id
+
+relationship a858ed65-9cbb-03f0-264b-4b41dc11bd83
+	fromColumn: fViagem.id_Campaign
+	toColumn: dCampanha.Id
+
+relationship feec1d87-1a14-8588-bb12-82f86685ede9
+	fromColumn: fViagem.ParticipantCPF
+	toColumn: dUsuario.CPF
+
+relationship 3e910262-8f8a-8737-58a7-09dba5195880
+	fromColumn: fBoleto.ParticipantCPFCNPJ
+	toColumn: dUsuario.CPF
+
+relationship f60cc5fb-341e-411f-7d34-5a58cd3affed
+	fromColumn: fCartao_recarga.ParticipantCPF
+	toColumn: dUsuario.CPF
+
+relationship fd3d500c-ef96-44d9-ba86-b8cd6cbb8e5b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fPedidoPix.DataUltAtualizacao
+	toColumn: LocalDateTable_0918db37-669c-496d-a5f3-fb45e12912d3.Date
+
+relationship 6421e202-3114-4849-9bd6-9407f4666202
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fPedidoPix.DataDevolucao
+	toColumn: LocalDateTable_c766d917-85dc-4b9d-9e76-e012030bfb13.Date
+
+relationship a88c2923-97a3-432c-5324-29d9bcceb7ab
+	fromColumn: fPedido_item.ParticipantCPFCNPJ
+	toColumn: dUsuario.CPF
+
+relationship 38637d14-e647-fa60-cf5d-45f9b84de2bd
+	fromColumn: fPedido_recarga_mobile_topup.ParticipantCPFCNPJ
+	toColumn: dUsuario.CPF
+
+relationship 25c55357-dcee-bf3d-4397-d27e6f5c89c4
+	fromColumn: fPedidoPix.CPF
+	toColumn: dUsuario.CPF
+
+relationship f4c0c6b2-75a7-4003-a1ca-52027612acef
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fPedidoPix.DataCadastro
+	toColumn: LocalDateTable_69fcb17a-25c1-4863-a798-1bcda8dc7a84.Date
+
+relationship 01e2b180-27c7-9b39-e10f-05a907a0c9e8
+	fromColumn: fPedidoPix.CampanhaId
+	toColumn: dCampanha.Id
+
+relationship eb7fc6e6-8840-c3db-e651-91f5cdab908a
+	fromColumn: fPonto.CPF
+	toColumn: dUsuario.CPF
+
+relationship 28f23f05-fa04-4b7d-c157-f4d5ff90e6a2
+	fromColumn: fPonto.id_Campaign
+	toColumn: dCampanha.Id
+
+relationship 3dea2ad8-c9c8-4e27-ace4-b705b195225b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dAtualizacao.DataRefresh
+	toColumn: LocalDateTable_0253f98c-2cc3-4399-a2fa-ed6c60009002.Date
+
+relationship f3fc1228-935d-33aa-b1b5-389b8a8c5c8a
+	fromColumn: fNovos_cartoes_recarga.ParticipantCPF
+	toColumn: dUsuario.CPF
+
+relationship 8ef5b5d6-83aa-4bb1-adf8-0f43e8ce53f8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dCalendario.Date
+	toColumn: LocalDateTable_0240e4b2-b615-487c-8755-ad71c622fb64.Date
+
+relationship 1c80b4a5-90cf-3e26-84c5-7aa0e20391ee
+	fromColumn: fPedido_recarga_mobile_topup.CreatedAt
+	toColumn: dCalendario.Date
+
+relationship b2960793-6920-08d7-10a9-894f8e249769
+	fromColumn: fViagem.CreatedAt
+	toColumn: dCalendario.Date
+
+relationship fb296914-38f0-0f66-715c-0ef0c76333fc
+	fromColumn: fBoleto.CreatedAt
+	toColumn: dCalendario.Date
+
+relationship 424ce1dd-c2be-f415-1a5d-cc3f78ad3c0d
+	fromColumn: fCartao_recarga.CreatedAt
+	toColumn: dCalendario.Date
+
+relationship e1f38f22-a422-2eee-4238-af303faabc8b
+	fromColumn: fNovos_cartoes_recarga.CreatedAt
+	toColumn: dCalendario.Date
+
+relationship a37f738a-efe1-f989-d55c-c6dcdab9a8d4
+	fromColumn: fPedido_item.CreatedAt
+	toColumn: dCalendario.Date
+
+relationship 7b272f3c-5bb3-0503-7b82-216304b811b7
+	fromColumn: fPedidoPix.DataPagamento
+	toColumn: dCalendario.Date
+
+relationship 6e94adb2-b14b-f46d-6f45-4a2397c7168e
+	fromColumn: fPonto.DataCarga
+	toColumn: dCalendario.Date
+
+relationship 3e42aa6c-dd25-c15c-3efb-6aa55a5577d1
+	fromColumn: fSiteAcesso.Date
+	toColumn: dCalendario.Date
+
+relationship 19939221-1c5d-263c-488e-c958ed934c84
+	fromColumn: fPedidoPix.CPF
+	toColumn: dUsuariosResgates.CPF
+
+relationship c7ff46e1-8df0-a2f8-740d-e7acf4325c4f
+	fromColumn: fViagem.ParticipantCPF
+	toColumn: dUsuariosResgates.CPF
+
+relationship 313d425d-2813-7b82-1a8c-d903ad05bd43
+	fromColumn: fCartao_recarga.ParticipantCPF
+	toColumn: dUsuariosResgates.CPF
+
+relationship 971e91a9-2846-47aa-1a9c-4dadaf26944e
+	fromColumn: fPedido_recarga_mobile_topup.ParticipantCPFCNPJ
+	toColumn: dUsuariosResgates.CPF
+
+relationship be83a8a6-44ee-ea81-c63a-2d2754b52550
+	fromColumn: fPedido_item.ParticipantCPFCNPJ
+	toColumn: dUsuariosResgates.CPF
+
+relationship 85df8898-75e0-7afc-051e-cba543f96423
+	fromColumn: fBoleto.ParticipantCPFCNPJ
+	toColumn: dUsuariosResgates.CPF
+
+relationship 3604594c-d9d5-9928-d0df-eabe83982629
+	fromColumn: fNovos_cartoes_recarga.ParticipantCPF
+	toColumn: dUsuariosResgates.CPF
+
+relationship aba79784-3b72-2e59-0dcd-4cae50283f3a
+	crossFilteringBehavior: bothDirections
+	fromColumn: dCampanha.ClienteId
+	toColumn: Client_URL.ClientID
+
+relationship d4c004ea-43d0-1454-91e6-620effe4d3a8
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: fPedido_item.id_Campaign
+	toColumn: fViagem.id_Campaign
+
+relationship 8dcdea8e-b056-82d0-4afa-f97f804bedaa
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: fPedido_item.ParticipantCPFCNPJ
+	toColumn: fBoleto.ParticipantCPFCNPJ
+

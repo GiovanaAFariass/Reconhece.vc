@@ -1,0 +1,97 @@
+table fPonto
+	lineageTag: 0679f895-b98c-414f-a09b-eda54873d9f2
+
+	column Observacao
+		dataType: string
+		lineageTag: ee09c2f7-b6f0-4263-94ca-8a74fd905339
+		summarizeBy: none
+		sourceColumn: Observacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ativo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a42d764c-6a78-44c1-b227-8d1bad8064aa
+		summarizeBy: none
+		sourceColumn: Ativo
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_Campaign
+		dataType: int64
+		formatString: 0
+		lineageTag: e57ee593-968b-41ac-875a-c99e296a2e88
+		summarizeBy: none
+		sourceColumn: id_Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign
+		dataType: string
+		lineageTag: 354b535d-a2b2-4df0-9268-b56a2675741a
+		summarizeBy: none
+		sourceColumn: Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column CPF
+		dataType: string
+		lineageTag: bcf6ccbf-fc26-455e-b050-d5f3dea971d9
+		summarizeBy: none
+		sourceColumn: CPF
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: ad408a20-b64b-4bba-9f5e-d23f0e8ec206
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataCarga
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 7660eb7d-1edd-40bf-a678-ce66f36bca6c
+		summarizeBy: none
+		sourceColumn: DataCarga
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PontoCarga
+		dataType: double
+		lineageTag: 8b9ef5fc-91a3-42c9-ae7f-3b74064dcbb1
+		summarizeBy: sum
+		sourceColumn: PontoCarga
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Tipo
+		dataType: string
+		lineageTag: c7eaa836-80dd-4702-9bb3-d5fcaacec8ce
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fPonto = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd", [Query="WITH PaginatedResults AS (#(lf)        SELECT#(lf)#(tab)#(tab)  c.id as 'id_Campaign',#(lf)#(tab)#(tab)#(tab)c.Nome as 'Campaign',#(lf)            u.CPF,#(lf)            u.Nome,#(lf)            u.Ativo,#(lf)            hp.DataCadastro AS DataCarga,#(lf)            hp.Pontos AS PontoCarga,#(lf)            CASE#(lf)                WHEN hp.TipoPontoId = 91 THEN 'Crédito'#(lf)                WHEN hp.TipoPontoId = 92 THEN 'Resgate'#(lf)                WHEN hp.TipoPontoId = 93 THEN 'Estorno'#(lf)            END AS Tipo,#(lf)            hp.Observacao,#(lf)            ROW_NUMBER() OVER (ORDER BY u.CPF, hp.DataCadastro) AS RowNum#(lf)        FROM dbo.Usuario u#(lf)            INNER JOIN dbo.UsuarioCampanha uc ON u.Id = uc.UsuarioId#(lf)            INNER JOIN dbo.HistoricoPonto hp ON uc.Id = hp.UsuarioCampanhaId#(lf)#(tab)#(tab)#(tab)INNER JOIN dbo.Campanha c ON c.id = uc.CampanhaId#(lf)        WHERE u.Ativo = 1#(lf)#(lf)            )#(lf)    SELECT#(lf)        id_Campaign, Campaign, CPF, Nome, Ativo, DataCarga, PontoCarga, Tipo, Observacao#(lf)    FROM PaginatedResults#(lf)    ORDER BY RowNum"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"DataCarga", type date}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Tipo Alterado",null,"N/A",Replacer.ReplaceValue,{"Tipo"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Valor Substituído", each [DataCarga] > #date(2021, 12, 31))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

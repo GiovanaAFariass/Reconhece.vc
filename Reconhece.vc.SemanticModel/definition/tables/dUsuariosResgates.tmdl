@@ -1,0 +1,52 @@
+table dUsuariosResgates
+	lineageTag: f47dfb7c-432f-43c3-9637-018dc7ca4f58
+
+	column CPF
+		lineageTag: e3720c3f-561d-48da-8dc3-b550121ed8cc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [CPF]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		lineageTag: c6cf067e-9717-4aaf-8180-802a44259e17
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Nome]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dUsuariosResgates = calculated
+		mode: import
+		source = ```
+				
+				// 1. Extrai o CPF e o Nome de cada tabela
+				VAR ListaBoleto = SELECTCOLUMNS('fBoleto', "CPF", 'fBoleto'[ParticipantCPFCNPJ], "Nome", 'fBoleto'[ParticipantName])
+				VAR ListaCartao = SELECTCOLUMNS('fCartao_recarga', "CPF", 'fCartao_recarga'[ParticipantCPF], "Nome", 'fCartao_recarga'[ParticipantName])
+				VAR ListaPedido = SELECTCOLUMNS('fPedido_item', "CPF", 'fPedido_item'[ParticipantCPFCNPJ], "Nome", 'fPedido_item'[ParticipantName])
+				VAR ListaAPI    = SELECTCOLUMNS('fViagem', "CPF", 'fViagem'[ParticipantCPF], "Nome", BLANK())
+				VAR ListaPix    = SELECTCOLUMNS('fPedidoPix', "CPF", 'fPedidoPix'[CPF], "Nome", 'fPedidoPix'[Nome]) 
+				
+				// 2. Empilha (UNION) todas as listas
+				VAR TodosOsUsuarios = UNION(ListaBoleto, ListaCartao, ListaPedido, ListaAPI, ListaPix)
+				
+				// 3. Remove os CPFs em branco
+				VAR UsuariosLimpos = FILTER(TodosOsUsuarios, NOT(ISBLANK([CPF])))
+				
+				// 4. Cria uma lista apenas com os CPFs únicos
+				VAR CPFsUnicos = DISTINCT(SELECTCOLUMNS(UsuariosLimpos, "CPF", [CPF]))
+				
+				// 5. Adiciona o nome buscando na tabela virtual e trata os vazios
+				RETURN
+				    ADDCOLUMNS(
+				        CPFsUnicos,
+				        "Nome", 
+				        VAR CpfAtual = [CPF]
+				        VAR NomeEncontrado = MAXX(FILTER(UsuariosLimpos, [CPF] = CpfAtual), [Nome])
+				        RETURN COALESCE(NomeEncontrado, "Não Informado")
+				    )
+				```
+
+	annotation PBI_Id = 807206078f7b49c5bb2822ab75d1ec8a
+

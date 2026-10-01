@@ -1,0 +1,218 @@
+table fPedidoPix
+	lineageTag: 0f212cd6-8b5c-4c6f-838f-fd3a34e3eebf
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1f3457ab-4761-4642-a066-c9f40d664847
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampanhaId
+		dataType: int64
+		formatString: 0
+		lineageTag: aab47dbc-cb41-4c54-84b8-aebbd7b0fcef
+		summarizeBy: none
+		sourceColumn: CampanhaId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CPF
+		dataType: string
+		lineageTag: 4b81fd86-a21f-4503-b3d3-c942a4cc1b83
+		summarizeBy: none
+		sourceColumn: CPF
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: d45c8b01-c1fd-4ba7-9fe0-6654afcc6d2e
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column SituacaoId
+		dataType: int64
+		formatString: 0
+		lineageTag: 916722ed-b0a6-4761-b30c-3dc50ed9a2b8
+		summarizeBy: count
+		sourceColumn: SituacaoId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoChave
+		dataType: string
+		lineageTag: 0fa872ca-eb28-4271-b129-9c53a0119495
+		summarizeBy: none
+		sourceColumn: TipoChave
+
+		annotation SummarizationSetBy = Automatic
+
+	column Chave
+		dataType: string
+		lineageTag: ce2d490a-8922-4e22-843a-2b8328774c25
+		summarizeBy: none
+		sourceColumn: Chave
+
+		annotation SummarizationSetBy = Automatic
+
+	column ValorResgate
+		dataType: double
+		lineageTag: c36d0bc1-8e6b-4c34-aff1-19615b677c4b
+		summarizeBy: sum
+		sourceColumn: ValorResgate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ValorTaxa
+		dataType: double
+		lineageTag: 397cc42b-ae8b-4c8b-950e-619ba651a8c1
+		summarizeBy: sum
+		sourceColumn: ValorTaxa
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ValorTotalResgate
+		dataType: double
+		lineageTag: 5656559b-7390-4c48-bf23-1d5cae296816
+		summarizeBy: sum
+		sourceColumn: ValorTotalResgate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TransacaoId
+		dataType: double
+		lineageTag: 27030ffb-4dbd-42d4-ba6a-a28190fa94e4
+		summarizeBy: count
+		sourceColumn: TransacaoId
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Erro
+		dataType: string
+		lineageTag: e12a4ad7-71b2-4927-bcf0-7f0db3137f75
+		summarizeBy: none
+		sourceColumn: Erro
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransacaoEndToEndId
+		dataType: string
+		lineageTag: 9b81ada8-4ab5-4cd6-944b-7a36157d77f3
+		summarizeBy: none
+		sourceColumn: TransacaoEndToEndId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataCadastro
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9b618aa8-ba97-4206-a422-d33dd065ced6
+		summarizeBy: none
+		sourceColumn: DataCadastro
+
+		variation Variation
+			isDefault
+			relationship: f4c0c6b2-75a7-4003-a1ca-52027612acef
+			defaultHierarchy: LocalDateTable_69fcb17a-25c1-4863-a798-1bcda8dc7a84.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataUltAtualizacao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e3b5f4ed-08c0-4cf6-8d67-c72c304a8272
+		summarizeBy: none
+		sourceColumn: DataUltAtualizacao
+
+		variation Variation
+			isDefault
+			relationship: fd3d500c-ef96-44d9-ba86-b8cd6cbb8e5b
+			defaultHierarchy: LocalDateTable_0918db37-669c-496d-a5f3-fb45e12912d3.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransactionIdPagamento
+		dataType: string
+		lineageTag: 800af48f-3cc1-43ea-981a-66d95a05845c
+		summarizeBy: none
+		sourceColumn: TransactionIdPagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransactionIdDevolucao
+		dataType: string
+		lineageTag: 809647f4-6f85-4177-8b5c-30dd71125f07
+		summarizeBy: none
+		sourceColumn: TransactionIdDevolucao
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataPagamento
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 420babd7-a4ce-42a0-9e91-d4c6c7210ada
+		summarizeBy: none
+		sourceColumn: DataPagamento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DataDevolucao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0c926fef-6f67-4e88-ab4f-4d196cfdbea3
+		summarizeBy: none
+		sourceColumn: DataDevolucao
+
+		variation Variation
+			isDefault
+			relationship: 6421e202-3114-4849-9bd6-9407f4666202
+			defaultHierarchy: LocalDateTable_c766d917-85dc-4b9d-9e76-e012030bfb13.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdToCelCoin
+		dataType: string
+		lineageTag: 8cb0bae4-8720-4525-a62d-68244c5b7743
+		summarizeBy: none
+		sourceColumn: IdToCelCoin
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConsultaChaveEndToEndId
+		dataType: string
+		lineageTag: 2ea5f47d-43a6-49dc-b502-bb7f3ed4d3f9
+		summarizeBy: none
+		sourceColumn: ConsultaChaveEndToEndId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fPedidoPix = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd"),
+				    dbo_PedidoPIX = Fonte{[Schema="dbo",Item="PedidoPIX"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(dbo_PedidoPIX,{{"DataPagamento", type date}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado", each [DataPagamento] > #date(2021, 12, 31))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

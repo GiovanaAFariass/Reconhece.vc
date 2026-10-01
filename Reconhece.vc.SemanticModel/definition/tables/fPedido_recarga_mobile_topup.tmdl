@@ -1,0 +1,125 @@
+table fPedido_recarga_mobile_topup
+	lineageTag: 3d9493bc-325d-4a8b-97a9-c7c14ee0b393
+
+	column id_Campaign
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e8ca182-1304-4161-8ecb-28e731cbc9ad
+		summarizeBy: none
+		sourceColumn: id_Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign
+		dataType: string
+		lineageTag: 526f85dd-5292-4c6e-92c8-73f9bdc465c2
+		summarizeBy: none
+		sourceColumn: Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantName
+		dataType: string
+		lineageTag: 92fa189e-f8f5-4acf-93be-3b0661a7fad6
+		summarizeBy: none
+		sourceColumn: ParticipantName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantCPFCNPJ
+		dataType: string
+		lineageTag: 4e05c89f-7a40-448f-bf8f-3e5fa7ba3020
+		summarizeBy: none
+		sourceColumn: ParticipantCPFCNPJ
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantEmail
+		dataType: string
+		lineageTag: 34883395-5a7f-4260-be20-9e4d82254a30
+		summarizeBy: none
+		sourceColumn: ParticipantEmail
+
+		annotation SummarizationSetBy = Automatic
+
+	column MobileOperator
+		dataType: string
+		lineageTag: fe5adcf5-5c50-4c63-ba17-fdd1c6635ff2
+		summarizeBy: none
+		sourceColumn: MobileOperator
+
+		annotation SummarizationSetBy = Automatic
+
+	column MobileNumber
+		dataType: string
+		lineageTag: 6bdd9ceb-8480-4d7d-8a57-cdd29c8196ed
+		summarizeBy: none
+		sourceColumn: MobileNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column PartnerID
+		dataType: string
+		lineageTag: 4ae78ff9-325a-4c9e-8b13-9c8cefbc89d4
+		summarizeBy: none
+		sourceColumn: PartnerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedAt
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 03ae5c4c-fded-428c-a741-708e57de1a82
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column TopupAmount
+		dataType: double
+		lineageTag: 64a24d44-49b6-4317-855c-0043c8507783
+		summarizeBy: sum
+		sourceColumn: TopupAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TopupPointsAmount
+		dataType: double
+		lineageTag: 648c0c0d-c985-420e-b17e-c7f613b5f577
+		summarizeBy: sum
+		sourceColumn: TopupPointsAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TopupFeeAmount
+		dataType: double
+		lineageTag: 453834cc-27da-4c83-ad40-4bd21181b3b0
+		summarizeBy: sum
+		sourceColumn: TopupFeeAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fPedido_recarga_mobile_topup = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd", [Query="SELECT#(lf)#(tab)    c.id as 'id_Campaign',#(lf)        c.Nome as 'Campaign',#(lf)        cr.NOME as 'ParticipantName',#(lf)        cr.CPFCNPJ as 'ParticipantCPFCNPJ',#(lf)        cr.EMAIL as 'ParticipantEmail',#(lf)        cr.OPERADORA as 'MobileOperator',#(lf)        cr.CELULAR as 'MobileNumber',#(lf)        cr.ID_PARCEIRO as 'PartnerID',#(lf)        cr.CREATED_AT as 'CreatedAt',#(lf)        cr.VALOR_RECARGA as 'TopupAmount',#(lf)        cr.VALOR_RECARGA_PONTOS as 'TopupPointsAmount',#(lf)        cr.VALOR_RECARGA_TAXA as 'TopupFeeAmount'#(lf)#(lf)    FROM dbo.RECARGA cr#(lf)        LEFT JOIN dbo.RECARGA_DETALHE cd ON cd.ID_RECARGA = cr.ID#(lf)        INNER JOIN dbo.Campanha c ON c.Id = cr.ID_CAMPANHA#(lf)    WHERE cr.ID_PARCEIRO IS NOT NULL#(lf)        AND cr.ID_PARCEIRO <> ''#(lf)    ORDER BY cr.CREATED_AT DESC, cr.ID"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"CreatedAt", type date}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Tipo Alterado","-","",Replacer.ReplaceText,{"ParticipantCPFCNPJ"}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído",".","",Replacer.ReplaceText,{"ParticipantCPFCNPJ"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Valor Substituído1", each [CreatedAt] > #date(2021, 12, 31))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

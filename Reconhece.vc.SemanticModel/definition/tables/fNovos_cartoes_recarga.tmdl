@@ -1,0 +1,112 @@
+table fNovos_cartoes_recarga
+	lineageTag: e3c9fc88-2adf-4204-a49a-e6d4a906111c
+
+	column id_Campaign
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b852c2c-9760-4805-b59f-dcc3c9bac64e
+		summarizeBy: none
+		sourceColumn: id_Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign
+		dataType: string
+		lineageTag: 0d92c005-3066-4196-bc6b-8662442d72b7
+		summarizeBy: none
+		sourceColumn: Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantName
+		dataType: string
+		lineageTag: 58ee8ff5-8810-42f3-b331-020112c87606
+		summarizeBy: none
+		sourceColumn: ParticipantName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantCPF
+		dataType: string
+		lineageTag: 732c07b4-aecd-4074-af83-911052f98d48
+		summarizeBy: none
+		sourceColumn: ParticipantCPF
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantEmail
+		dataType: string
+		lineageTag: 1d8066a1-c326-4e72-996b-a242a3f4eb0e
+		summarizeBy: none
+		sourceColumn: ParticipantEmail
+
+		annotation SummarizationSetBy = Automatic
+
+	column InitialCardBalance
+		dataType: int64
+		formatString: 0
+		lineageTag: 912737ed-04a0-4e51-a5a4-614fe2a1bced
+		summarizeBy: sum
+		sourceColumn: InitialCardBalance
+
+		annotation SummarizationSetBy = Automatic
+
+	column CardIssuanceAmount
+		dataType: int64
+		formatString: 0
+		lineageTag: d2f5e9bc-296d-4b96-8556-91923716a713
+		summarizeBy: sum
+		sourceColumn: CardIssuanceAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalAmount
+		dataType: int64
+		formatString: 0
+		lineageTag: 74062355-4ce2-426b-81af-92b881c30d30
+		summarizeBy: sum
+		sourceColumn: TotalAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsIssued
+		dataType: string
+		lineageTag: f9526a08-1737-4074-b478-abaf76e99713
+		summarizeBy: none
+		sourceColumn: IsIssued
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 7458b227-3db0-4500-a3d5-fb01729e365c
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedAt
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 3f8bd26f-1c5c-428e-aee0-37cbc5a12361
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition fNovos_cartoes_recarga = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd", [Query="SELECT#(lf)#(tab)    c.id as 'id_Campaign',#(lf)        c.Nome as 'Campaign',#(lf)        cs.Nome as 'ParticipantName',#(lf)        cs.CPF as 'ParticipantCPF',#(lf)        cs.Email as 'ParticipantEmail',#(lf)        50 as 'InitialCardBalance',    -- Fixed Value#(lf)        40 as 'CardIssuanceAmount',    -- Fixed Value#(lf)        90 as 'TotalAmount',           -- Fixed Value#(lf)        COALESCE(cs.FlgEmitido, 'N') AS 'IsIssued',#(lf)        s.Descricao AS 'Status',#(lf)        cs.DataCadastro as 'CreatedAt'#(lf)#(lf)    FROM dbo.CartaoSolicitacao cs#(lf)        INNER JOIN dbo.Campanha c ON c.Id = cs.CampanhaId#(lf)        LEFT JOIN dbo.Situacao s ON cs.SituacaoId = s.Id#(lf)    ORDER BY cs.DataCadastro DESC, cs.Id"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"CreatedAt", type date}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado", each [CreatedAt] > #date(2021, 12, 31))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

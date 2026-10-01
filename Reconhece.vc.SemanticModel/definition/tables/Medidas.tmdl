@@ -1,0 +1,1022 @@
+table Medidas
+	lineageTag: 5b743e54-c36e-4285-8664-8dba818a6747
+
+	measure Acessos = DISTINCTCOUNTNOBLANK('fSiteAcesso'[Id])
+		formatString: #,0
+		displayFolder: Acessos
+		lineageTag: 6ce28f43-1e13-49e3-a298-92c3d4a2d9f8
+
+	measure Usuários = DISTINCTCOUNTNOBLANK('fSiteAcesso'[CPF])
+		formatString: #,0
+		displayFolder: Acessos
+		lineageTag: 0a3d2c82-4a77-48df-a613-a0fec1533937
+
+	measure Acessos/Dia = ```
+			
+			AVERAGEX(
+			    VALUES(dCalendario[Date]), 
+			    [Acessos]
+			)
+			```
+		formatString: #,0.0
+		displayFolder: Acessos
+		lineageTag: 368cd814-ae11-44ae-bcc1-7cf1d925c5de
+
+	measure 'Total de Pontos' = SUM(fPonto[PontoCarga])
+		formatString: #,0
+		displayFolder: Pontos
+		lineageTag: 1a5f28f8-d7a0-4f9f-bfef-27177a861d2c
+
+	measure 'Total de Pontos R$' = SUMX('fPonto','fPonto'[PontoCarga] * RELATED('dCampanha'[FatorConversao]))
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Pontos
+		lineageTag: 217b76f1-7b3f-4479-aa05-3499cec05e79
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'KPI Produtos' =
+			
+			IF(
+			    ISBLANK([Produtos Qtd]) && ISBLANK([Produtos Valor]),
+			    BLANK(),
+			    FORMAT([Produtos Qtd], "#,##0") & " | R$ " & FORMAT([Produtos Valor], "#,##0.00")
+			)
+		displayFolder: Resgates
+		lineageTag: a953348b-5eb8-487c-9e13-63a287a1f493
+
+	measure 'Viagens Qtd' = DISTINCTCOUNTNOBLANK(fViagem[RequestNumber])
+		formatString: 0
+		displayFolder: Resgates
+		lineageTag: b78d91dd-4ce2-4b11-99ba-9c8729675cb9
+
+	measure 'Cartão Qtd' = COUNTROWS(fNovos_cartoes_recarga)
+		formatString: 0
+		displayFolder: Resgates
+		lineageTag: f2441553-426e-4711-9509-5d68738030b4
+
+	measure 'Serviços Qtd' = [Boleto Qtd] + [Cartão Qtd] + [Pedido Pix Qtd]
+		displayFolder: Resgates
+		lineageTag: 7571706b-ef81-4ef8-971f-f06194886ce6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Resgates Qtd' = [Produtos Qtd] + [Viagens Qtd] + [Serviços Qtd]
+		formatString: #,0
+		displayFolder: Resgates
+		lineageTag: c4bf3d3e-ff95-4c91-ba74-49416c6fac25
+
+	measure 'Acessos VAR' = ```
+			
+			VAR DataMax = MAX(dCalendario[Date])
+			VAR DataMin = MIN(dCalendario[Date])
+			VAR Dias = DATEDIFF(DataMin, DataMax, DAY) + 1
+			VAR DataMinAnt = DataMin - Dias
+			VAR DataMaxAnt = DataMin - 1
+			
+			VAR ValorAtual = [Acessos]
+			VAR ValorAnterior = 
+			    CALCULATE(
+			        [Acessos],
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] >= DataMinAnt && dCalendario[Date] <= DataMaxAnt
+			    )
+			    
+			VAR Variacao = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+			VAR Seta = IF(Variacao > 0, "▲", IF(Variacao < 0, "▼", "►"))
+			
+			RETURN
+			    IF(
+			        ISBLANK(ValorAnterior), 
+			        "-", 
+			        Seta & " " & FORMAT(ABS(Variacao), "0%")
+			    )
+			```
+		displayFolder: Acessos
+		lineageTag: 07642550-db9c-4726-83cf-04fcc4e0173a
+
+	measure 'Acessos/Dia VAR' = ```
+			
+			VAR DataMax = MAX(dCalendario[Date])
+			VAR DataMin = MIN(dCalendario[Date])
+			VAR Dias = DATEDIFF(DataMin, DataMax, DAY) + 1
+			VAR DataMinAnt = DataMin - Dias
+			VAR DataMaxAnt = DataMin - 1
+			
+			VAR ValorAtual = [Acessos/Dia]
+			VAR ValorAnterior = 
+			    CALCULATE(
+			        [Acessos/Dia],
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] >= DataMinAnt && dCalendario[Date] <= DataMaxAnt
+			    )
+			    
+			VAR Variacao = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+			VAR Seta = IF(Variacao > 0, "▲", IF(Variacao < 0, "▼", "►"))
+			
+			RETURN
+			    IF(
+			        ISBLANK(ValorAnterior), 
+			        "-", 
+			        Seta & " " & FORMAT(ABS(Variacao), "0%")
+			    )
+			```
+		displayFolder: Acessos
+		lineageTag: 46cf15a2-3a1c-4a69-8587-024fa33b23e9
+
+	measure 'Usuários VAR' = ```
+			
+			VAR DataMax = MAX(dCalendario[Date])
+			VAR DataMin = MIN(dCalendario[Date])
+			VAR Dias = DATEDIFF(DataMin, DataMax, DAY) + 1
+			VAR DataMinAnt = DataMin - Dias
+			VAR DataMaxAnt = DataMin - 1
+			
+			VAR ValorAtual = [Usuários]
+			VAR ValorAnterior = 
+			    CALCULATE(
+			        [Usuários],
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] >= DataMinAnt && dCalendario[Date] <= DataMaxAnt
+			    )
+			    
+			VAR Variacao = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+			VAR Seta = IF(Variacao > 0, "▲", IF(Variacao < 0, "▼", "►"))
+			
+			RETURN
+			    IF(
+			        ISBLANK(ValorAnterior), 
+			        "-", 
+			        Seta & " " & FORMAT(ABS(Variacao), "0%")
+			    )
+			```
+		displayFolder: Acessos
+		lineageTag: b79866f2-6dbf-461e-b6fd-76817e95b264
+
+	measure 'Último Acesso' = MAX('fSiteAcesso'[Date])
+		formatString: Short Date
+		displayFolder: Acessos
+		lineageTag: 18ba9b19-422a-44b0-8403-8470e6d12943
+
+	measure 'Último Acesso (30 Dias)' = ```
+			
+			VAR DataRef = MAX(dCalendario[Date])
+			VAR DataCorte = DataRef - 30
+			
+			// 1. Identifica os IDs das campanhas que estão no contexto (filtradas no período atual)
+			VAR CampanhasDoPeriodo = VALUES('fSiteAcesso'[CampanhaId])
+			
+			// 2. Lista os CPFs vinculados a essas campanhas específicas (olhando o histórico até a data atual)
+			VAR UsuariosDasCampanhas = 
+			    CALCULATETABLE(
+			        VALUES('fSiteAcesso'[CPF]),
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] <= DataRef,
+			        CampanhasDoPeriodo
+			    )
+			
+			// 3. Lista os CPFs que tiveram acesso ao site nos últimos 30 dias
+			VAR UsuariosRecentes = 
+			    CALCULATETABLE(
+			        VALUES('fSiteAcesso'[CPF]),
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] > DataCorte,
+			        dCalendario[Date] <= DataRef
+			    )
+			
+			// 4. Subtrai os usuários recentes da lista de usuários das campanhas. Quem sobra é inativo.
+			VAR UsuariosInativos = EXCEPT(UsuariosDasCampanhas, UsuariosRecentes)
+			
+			RETURN
+			    COUNTROWS(UsuariosInativos)
+			```
+		formatString: #,0
+		displayFolder: Acessos
+		lineageTag: 61a8c5da-199c-4bc5-b0f4-4833b62500c3
+
+	measure 'Último Acesso (30 Dias) VAR' = ```
+			
+			VAR DataMax = MAX(dCalendario[Date])
+			VAR DataMin = MIN(dCalendario[Date])
+			VAR Dias = DATEDIFF(DataMin, DataMax, DAY) + 1
+			VAR DataMinAnt = DataMin - Dias
+			VAR DataMaxAnt = DataMin - 1
+			
+			VAR ValorAtual = [Último Acesso (30 Dias)]
+			VAR ValorAnterior = 
+			    CALCULATE(
+			        [Último Acesso (30 Dias)],
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] >= DataMinAnt && dCalendario[Date] <= DataMaxAnt
+			    )
+			    
+			VAR Variacao = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+			VAR Seta = IF(Variacao > 0, "▲", IF(Variacao < 0, "▼", "►"))
+			
+			RETURN
+			    IF(
+			        ISBLANK(ValorAnterior), 
+			        "-", 
+			        Seta & " " & FORMAT(ABS(Variacao), "0%")
+			    )
+			```
+		displayFolder: Acessos
+		lineageTag: 9c7b213a-693b-4246-90bc-c4d7c8f92b16
+
+	measure 'Dias Inatividade' =
+			
+			VAR DataRef = CALCULATE(MAX(dCalendario[Date]), ALLSELECTED(dCalendario))
+			VAR UltimoAcesso = MAX('fSiteAcesso'[Date])
+			RETURN
+			    IF(
+			        NOT ISBLANK(UltimoAcesso),
+			        DATEDIFF(UltimoAcesso, DataRef, DAY)
+			    )
+		formatString: 0
+		displayFolder: Acessos
+		lineageTag: 988e8443-aad5-456b-a52e-47620a52aaf1
+
+	measure UltimaAtt =
+			
+			VAR DataHora =
+			    MAXX({
+			            MAX('fPonto'[DataCarga]),
+			            MAX('fViagem'[CreatedAt]),
+			            MAX('fBoleto'[CreatedAt]),
+			            MAX('fCartao_recarga'[CreatedAt]),
+			            MAX('fSiteAcesso'[Date]),
+			            MAX('fNovos_cartoes_recarga'[CreatedAt]),
+			            MAX('fPedido_item'[CreatedAt]),
+			            MAX('fPedido_recarga_mobile_topup'[CreatedAt])
+			        },
+			        [Value]
+			    )
+			RETURN
+			    "Última Atualização: " & FORMAT(DataHora, "dd/MM/yyyy") & "."
+		lineageTag: a6d1a4ff-b905-4925-a4a5-6c578a293e2e
+
+	measure 'Nunca Acessaram' = ```
+			
+			// 1. Identifica os IDs das campanhas que estão no contexto (filtradas no período atual)
+			VAR CampanhasAtivas = VALUES('fSiteAcesso'[CampanhaId])
+			
+			// 2. Lista os usuários vinculados a essas campanhas específicas
+			VAR UsuariosDasCampanhas = 
+			    CALCULATETABLE(
+			        VALUES(dUsuario[CPF]),
+			        TREATAS(CampanhasAtivas, dCampanha[Id]), // Transfere o filtro da tabela Fato para a Dimensão
+			        CROSSFILTER(dUsuario[Id], dUsuarioCampanha[UsuarioId], BOTH), // Força o filtro chegar nos Usuários
+			        REMOVEFILTERS(dCalendario) // Garante que vai listar todos os usuários da campanha, independente da data
+			    )
+			
+			// 3. Lista todos os usuários que já acessaram o site alguma vez na vida (histórico completo)
+			VAR UsuariosComAcesso = 
+			    CALCULATETABLE(
+			        VALUES('fSiteAcesso'[CPF]),
+			        REMOVEFILTERS(dCalendario)
+			    )
+			
+			// 4. Subtrai quem já acessou da lista de usuários das campanhas ativas.
+			VAR UsuariosSemAcesso = EXCEPT(UsuariosDasCampanhas, UsuariosComAcesso)
+			
+			RETURN
+			    COUNTROWS(UsuariosSemAcesso)
+			```
+		formatString: #,0
+		displayFolder: Acessos
+		lineageTag: 0a759f15-eb1f-49e3-9670-11844f748c23
+
+	measure 'Produtos Valor' =
+			
+			SUMX(
+			    VALUES(fPedido_item[OrderNumber]),
+			    CALCULATE(
+			        SUM(fPedido_item[ItemTotalInMoney]) + //AVERAGE
+			        SUM((fPedido_item[TotalShippingInMoney])
+			    )
+			))
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: a4fc2418-4825-44f3-a7f8-b136a249dcf2
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Produtos Qtd' = SUM(fPedido_item[Quantity])
+		formatString: #,0
+		displayFolder: Resgates
+		lineageTag: e448acbc-2e11-440a-b519-e3907de995e0
+
+	measure 'Boleto Qtd' =
+			COUNTROWS(fBoleto)
+			-- SUM(Boleto[BoletoPointsAmount])
+		displayFolder: Resgates
+		lineageTag: e9ba9d47-3ce4-4b0f-8e35-b7d572a8790e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Boleto Valor' = SUM(fBoleto[BoletoFeeAmount])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: cf86e2d4-d6c4-4862-9a29-f0299b22ade2
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Pedido Pix Qtd' =
+			
+			IF(
+			    HASONEVALUE(fPedido_item[store]),
+			    BLANK(),
+			    CALCULATE(
+			        DISTINCTCOUNTNOBLANK(fPedidoPix[TransactionIdPagamento]),
+			        NOT(ISBLANK(fPedidoPix[DataPagamento]))
+			    )
+			)
+		formatString: 0
+		displayFolder: Resgates
+		lineageTag: ab488bdc-b03b-4fb1-a48f-71450502db98
+
+	measure 'Pedido Pix Valor' =
+			
+			IF(
+			    HASONEVALUE(fPedido_item[Store]),
+			    BLANK(),
+			    CALCULATE(
+			        SUM(fPedidoPix[ValorTotalResgate]),
+			        NOT(ISBLANK(fPedidoPix[DataPagamento]))
+			    )
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: b8942436-4adf-45d3-8328-bef5e43d6ad8
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Resgates Valor' = [Produtos Valor] + [Viagens Qtd] + [Serviços Valor Ajustado]
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: cee92dd9-d2d1-4fb4-8496-a5fca2ad1804
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Cartão Valor' = SUM(fNovos_cartoes_recarga[TotalAmount])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: 6627e717-fd0b-40fd-b310-b51764b2a217
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'KPI Cartão' =
+			
+			IF(
+			    ISBLANK([Cartão Qtd]) && ISBLANK([Cartão Valor]),
+			    BLANK(),
+			    FORMAT([Cartão Qtd], "#,##0") & " | R$ " & FORMAT([Cartão Valor], "#,##0.00")
+			)
+		displayFolder: Resgates
+		lineageTag: 50330055-9736-41fd-b928-282370411d3f
+
+	measure 'Serviços Valor' = [Boleto Valor] + [Cartão Valor] + [Pedido Pix Valor]
+		displayFolder: Resgates
+		lineageTag: 31210195-eee8-438f-a701-1e97048e0ecb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI Serviços' =
+			
+			IF(
+			    ISBLANK([Serviços Qtd]) && ISBLANK([Serviços Valor]),
+			    BLANK(),
+			    FORMAT([Serviços Qtd], "#,##0") & " | R$ " & FORMAT([Serviços Valor], "#,##0.00")
+			)
+		displayFolder: Resgates
+		lineageTag: b2fd509a-9916-41dc-b580-56e446f62555
+
+	measure 'KPI Resgates' =
+			
+			IF(
+			    ISBLANK([Resgates Qtd]) && ISBLANK([Resgates Valor]),
+			    BLANK(),
+			    FORMAT([Resgates Qtd], "#,##0") & " | R$ " & FORMAT([Resgates Valor], "#,##0.00")
+			)
+		displayFolder: Resgates
+		lineageTag: 820bc269-c971-4425-a25a-40051a6b6d7d
+
+	measure 'Usuários Resgatando' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('dUsuariosResgates'[CPF]),
+			    FILTER(
+			        VALUES('dUsuariosResgates'[CPF]),
+			        [Resgates Qtd] > 0
+			    )
+			)
+		formatString: #,0
+		displayFolder: Resgates
+		lineageTag: d9e53dc4-8345-4944-9ecd-217a98915d60
+
+	measure 'Ticket Médio' =
+			
+			VAR QtdPedidos = DISTINCTCOUNTNOBLANK(fPedido_item[OrderNumber])
+			VAR ValorTotal = [Produtos Valor]
+			
+			RETURN
+			    DIVIDE(ValorTotal, QtdPedidos, BLANK())
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: c9ef7f21-4c20-4ce6-a484-f1bbe2902ded
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'KPI Total de Pontos' =
+			
+			IF(
+			    ISBLANK([Total de Pontos]) && ISBLANK([Total de Pontos R$]),
+			    BLANK(),
+			    FORMAT([Total de Pontos], "#,##0") & " | R$ " & FORMAT([Total de Pontos R$], "#,##0.00")
+			)
+		displayFolder: Pontos
+		lineageTag: 48fa713a-9301-4320-8aa9-cd449f32d35f
+
+	measure 'KPI Crédito' =
+			
+			IF(
+			    ISBLANK([Total Crédito]),
+			    "0 | R$ 0,00",
+			    FORMAT([Total Crédito], "#,##0") & " | R$ " & FORMAT([Total Crédito R$], "#,##0.00")
+			)
+		displayFolder: Pontos
+		lineageTag: 8668eba1-49d2-447e-b0ab-0c074cbaa08e
+
+	measure 'Total Resgate' = CALCULATE([Total de Pontos], fPonto[Tipo] = "Resgate")
+		formatString: #,0
+		displayFolder: Pontos
+		lineageTag: 01ff6ee1-b095-4b60-a51f-44cd59bb44bc
+
+	measure 'Total Crédito' = CALCULATE([Total de Pontos], fPonto[Tipo] = "Crédito")
+		formatString: #,0
+		displayFolder: Pontos
+		lineageTag: 040668c1-bf70-4a7e-8ced-ad37b0725da6
+
+	measure 'Total Crédito R$' = CALCULATE([Total de Pontos R$], fPonto[Tipo] = "Crédito")
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Pontos
+		lineageTag: bcb3e9d7-9d07-4d38-b759-a544d1e6f51c
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Total Resgate R$' = CALCULATE([Total de Pontos R$], fPonto[Tipo] = "Resgate")
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Pontos
+		lineageTag: e7ed70dd-b9da-416d-9761-e8aad0ca9c6c
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'KPI Resgate' =
+			
+			IF(
+			    ISBLANK([Total Resgate]),
+			    "0 | R$ 0,00",
+			    FORMAT([Total Resgate], "#,##0") & " | R$ " & FORMAT([Total Resgate R$], "#,##0.00")
+			)
+		displayFolder: Pontos
+		lineageTag: 7c2a7772-526c-4da4-81ce-4532d4345000
+
+	measure 'Total Estorno' = CALCULATE([Total de Pontos], fPonto[Tipo] = "Estorno")
+		formatString: #,0
+		displayFolder: Pontos
+		lineageTag: f129da25-6bcf-42d5-a8f8-8d7cf9165ee5
+
+	measure 'Total Estorno R$' = CALCULATE([Total de Pontos R$], fPonto[Tipo] = "Estorno")
+		displayFolder: Pontos
+		lineageTag: 4a7f1b55-e577-4f77-979f-6dc0de280246
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI Estorno' =
+			
+			IF(
+			    ISBLANK([Total Estorno]),
+			    "0 | R$ 0,00",
+			    FORMAT([Total Estorno], "#,##0") & " | R$ " & FORMAT([Total Estorno R$], "#,##0.00")
+			)
+		displayFolder: Pontos
+		lineageTag: 3f945420-4191-43bc-9b91-910b3d8df1d5
+
+	measure Produtos = SUM(fPedido_item[ItemTotalInPoints])
+		formatString: #,0.00
+		displayFolder: Pontos Utilizados
+		lineageTag: 985bfb56-1106-4793-aa6f-14835e7f49fa
+
+	measure Viagens = SUM(fViagem[PointsQuantity])
+		formatString: #,0
+		displayFolder: Pontos Utilizados
+		lineageTag: d766666a-1183-4539-94e4-cec7f7cdf829
+
+	measure Cartão = SUM(fCartao_recarga[PointsAmount])
+		formatString: #,0.00
+		displayFolder: Pontos Utilizados
+		lineageTag: f9f57840-ea6a-49da-9710-af78f62d29be
+
+	measure Boleto = SUM(fBoleto[BoletoPointsAmount])
+		formatString: #,0.00
+		displayFolder: Pontos Utilizados
+		lineageTag: 38b14a9f-c712-40cb-9a9e-8493d74df12f
+
+	measure 'Filtro Nunca Acessaram' =
+			
+			IF(
+			    ISBLANK([Acessos]) || [Acessos] = 0,
+			    1
+			)
+		formatString: 0
+		displayFolder: Acessos
+		lineageTag: 2865c104-1305-4813-b6b4-fb8778a4af78
+
+	measure 'KPI Boleto' =
+			
+			IF(
+			    ISBLANK([Boleto Qtd]) && ISBLANK([Boleto Valor]),
+			    BLANK(),
+			    FORMAT([Boleto Qtd], "#,##0") & " | R$ " & FORMAT([Boleto Valor], "#,##0.00")
+			)
+		displayFolder: Resgates
+		lineageTag: b5e790f1-3ca5-4efe-9cd7-2cf9098258ec
+
+	measure 'KPI Pedido Pix' =
+			
+			IF(
+			    ISBLANK([Pedido Pix Qtd]) && ISBLANK([Pedido Pix Valor]),
+			    BLANK(),
+			    FORMAT([Pedido Pix Qtd], "#,##0") & " | R$ " & FORMAT([Pedido Pix Valor], "#,##0.00")
+			)
+		displayFolder: Resgates
+		lineageTag: e121083b-3529-4aba-b23c-c9f423245d6a
+
+	measure 'Recarga Celular' = SUM(fPedido_recarga_mobile_topup[TopupPointsAmount])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Pontos Utilizados
+		lineageTag: 4cf993d0-a7c1-4107-97ba-37d4e326c019
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Frete Total' =
+			
+			SUMX(
+			    VALUES(fPedido_item[OrderNumber]),
+			    CALCULATE(//AVERAGE
+			        SUM(fPedido_item[TotalShippingInMoney]))
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: 1d635352-7225-492d-8609-c321802cc81f
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Total de Pedidos' = DISTINCTCOUNTNOBLANK(fPedido_item[OrderNumber])
+		formatString: #,0
+		displayFolder: Resgates
+		lineageTag: 20225cb5-880e-4caa-9843-5d3b4f0dc438
+
+	measure 'Usuários Resgatando Produtos' = CALCULATE(DISTINCTCOUNTNOBLANK(fPedido_item[ParticipantCPFCNPJ]))
+		formatString: #,0
+		displayFolder: Resgates
+		lineageTag: ba74ad88-e5ce-4d2a-88c1-25d68cf85185
+
+	measure 'Cartão Recarga Qtd' = COUNTROWS(fCartao_recarga)
+		formatString: 0
+		displayFolder: Resgates
+		lineageTag: b45be982-7011-4ce6-883b-959f225d8d24
+
+	measure 'Cartão Recarga Valor' = SUM(fCartao_recarga[FeeAmount])
+		displayFolder: Resgates
+		lineageTag: a608a346-78c7-4072-bb8b-ce1a8d622957
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI Cartão Recarga' =
+			
+			IF(
+			    ISBLANK([Cartão Recarga Qtd]) && ISBLANK([Cartão Recarga Valor]),
+			    BLANK(),
+			    FORMAT([Cartão Recarga Qtd], "#,##0") & " | R$ " & FORMAT([Cartão Recarga Valor], "#,##0.00")
+			)
+		displayFolder: Resgates
+		lineageTag: 4c86b1be-9f46-4849-a5bb-7dfb17d76836
+
+	measure 'Mobile Qtd' = COUNTROWS(fPedido_recarga_mobile_topup)
+		formatString: 0
+		displayFolder: Resgates
+		lineageTag: 91c77e09-d9fb-47eb-9313-0d8bc9df5478
+
+	measure 'Mobile Valor' = SUM(fPedido_recarga_mobile_topup[TopupFeeAmount])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: 595fab93-fd65-4023-a1fa-248d65cbd96a
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'KPI Mobile' =
+			
+			IF(
+			    ISBLANK([Mobile Qtd]) && ISBLANK([Mobile Valor]),
+			    BLANK(),
+			    FORMAT([Mobile Qtd], "#,##0") & " | R$ " & FORMAT([Mobile Valor], "#,##0.00")
+			)
+		displayFolder: Resgates
+		lineageTag: ed509579-3617-4935-bcba-1f9c6d4fc853
+
+	measure 'Saldo Disponível' = [KPI Crédito]-[KPI Resgate]+[KPI Estorno]
+		displayFolder: Pontos
+		lineageTag: 578ca055-294e-40f2-825e-7c1a185393d6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI Saldo Disponível' =
+			
+			VAR SaldoQtd = [Total Crédito] - [Total Resgate] + [Total Estorno]
+			
+			VAR SaldoValor = [Total Crédito R$] - [Total Resgate R$] + [Total Estorno R$]
+			
+			RETURN
+			    IF(
+			        ISBLANK(SaldoQtd) && ISBLANK(SaldoValor),
+			        "0 | R$ 0,00",
+			        FORMAT(SaldoQtd, "#,##0") & " | R$ " & FORMAT(SaldoValor, "#,##0.00")
+			    )
+		displayFolder: Pontos
+		lineageTag: db791a22-4d57-4583-b0c0-e5dc391eb72b
+
+	measure 'Total Usuários' = [Usuários]+[Nunca Acessaram]
+		formatString: #,0
+		displayFolder: Acessos
+		lineageTag: 65c0db2f-46db-47da-9145-db16daecbbde
+
+	measure 'Complemento de Cartão' =
+			
+			SUMX(
+			    VALUES('fPedido_item'[OrderNumber]),
+			    CALCULATE(
+			        DIVIDE(
+			            SUM('fPedido_item'[TotalComplementAmountInMoney]),
+			            COUNTROWS('fPedido_item')
+			        )
+			    )
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: 1504a801-be14-44f2-8b07-245f6dc611b3
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Logo HTML' =
+			
+			VAR URL_ =
+			    SELECTEDVALUE(Client_URL[URL])
+			
+			RETURN
+			"
+			<div style='
+			height:100%;
+			width:100%;
+			display:flex;
+			justify-content:center;
+			align-items:center;
+			'>
+			<img src='" & URL_ & "'
+			style='
+			max-width:100%;
+			max-height:100%;
+			object-fit:contain;
+			'>
+			</div>
+			"
+		lineageTag: 2128daac-eb07-409e-9e45-b7220439df76
+
+	measure 'Saldo Qtd Disponivel' = [Total Crédito] - [Total Resgate] + [Total Estorno]
+		formatString: #,0
+		displayFolder: Pontos
+		lineageTag: 9ab88ab6-56bf-4574-9234-c74a9719cbf9
+
+	measure 'Ticket Médio LY' =
+			
+			CALCULATE(
+			    [Ticket Médio],
+			    SAMEPERIODLASTYEAR(dCalendario[Date])
+			)
+		formatString: 0
+		displayFolder: Resgates
+		lineageTag: 8315c93b-4c0c-4c72-931e-362ef9139b2b
+
+	measure 'Variação Pedidos %' =
+			
+			VAR Atual = [Total de Pedidos]
+			VAR LY = [Ticket Médio LY]
+			RETURN
+			DIVIDE(Atual - LY, LY)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Resgates
+		lineageTag: 3eed8f82-536c-4e29-a29d-f18d945aed39
+
+	measure 'Variação Ticket Médio %' =
+			
+			VAR Atual = [Ticket Médio]
+			VAR LY = [total de pedidos LY]
+			RETURN
+			DIVIDE(Atual - LY, LY)
+		displayFolder: Resgates
+		lineageTag: 9f7dfded-4cf2-4c91-b0ef-02a0a68d0c6c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total de Pedidos LY' =
+			
+			CALCULATE(
+			    [Total de Pedidos],
+			    SAMEPERIODLASTYEAR(dCalendario[Date])
+			)
+		formatString: 0
+		displayFolder: Resgates
+		lineageTag: 0fa29ec9-b8a4-48dc-b296-877091bf2133
+
+	measure 'Campanha do Cliente' =
+			
+			IF(
+			    HASONEVALUE(dUsuario[CPF]),
+			     "Campanha: " & CALCULATE(
+			        CONCATENATEX(
+			            VALUES(dCampanha[Nome]),
+			            dCampanha[Nome],
+			            ", "
+			        ),
+			        CROSSFILTER(dUsuarioCampanha[CampanhaId], dCampanha[Id], BOTH)
+			    ),
+			    BLANK()
+			)
+		lineageTag: 62e19b58-c794-476e-b681-4c7f7ed098c0
+
+	measure 'Campanha do Cliente pedido item' =
+			
+			IF(
+			    HASONEVALUE(fPedido_item[ParticipantCPFCNPJ]),
+			     "Campanha: " & CALCULATE(
+			        CONCATENATEX(
+			            VALUES(dCampanha[Nome]),
+			            dCampanha[Nome],
+			            ", "
+			        ),
+			        CROSSFILTER(dCampanha[Id],fPedido_item[id_Campaign], BOTH)
+			    ),
+			    BLANK()
+			)
+		lineageTag: 2747bcd8-3c7b-42f2-bb67-3d9ac46f36ed
+
+	measure 'Teste Contagem Participantes' = ```
+			
+			
+			```
+		formatString: 0
+		lineageTag: a313f0b9-2614-4f2d-a014-49805d032513
+
+	measure 'Campanha do Cliente Site Acesso' =
+			
+			IF(
+			    HASONEVALUE(fSiteAcesso[CPF]),
+			     "Campanha: " & CALCULATE(
+			        CONCATENATEX(
+			            VALUES(dCampanha[Nome]),
+			            dCampanha[Nome],
+			            ", "
+			        ),
+			        CROSSFILTER(dCampanha[Id],fSiteAcesso[CampanhaId], BOTH)
+			    ),
+			    BLANK()
+			)
+		lineageTag: fa51350f-872d-4d0b-b948-622ede2d94b9
+
+	measure 'KPI Recarga' =
+			
+			IF(
+			    ISBLANK([Recarga Celular]),
+			    BLANK(),
+			    "R$ " & FORMAT([Recarga Celular], "#,##0.00")
+			)
+		displayFolder: Pontos Utilizados
+		lineageTag: 76e339b9-51a4-49c3-a8c5-800b4b135177
+
+	measure 'KPI Pedidos' =
+			
+			IF(
+			    ISBLANK([Total de Pedidos]),
+			    "0",
+			    FORMAT([Total de Pedidos], "#,##0")
+			)
+		displayFolder: Pontos
+		lineageTag: 9d1a2c5c-648a-488d-8aea-f222648f83b3
+
+	measure 'Serviços Valor Ajustado' =
+			
+			IF(
+			    HASONEVALUE(fPedido_item[Store]),
+			    BLANK(),
+			    [Serviços Valor]
+			)
+		displayFolder: Resgates
+		lineageTag: 4d5479c4-285b-496a-aa38-dbdea054a4c1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI Resgates Valor' =
+			
+			IF(
+			    ISBLANK([Resgates Valor]),
+			    BLANK(),
+			    "R$ " & FORMAT([Resgates Valor], "#,##0.00")
+			)
+		displayFolder: Resgates
+		lineageTag: 723c8c66-d6f6-4ec6-8bb9-b2f4cc988fcc
+
+	measure 'KPI Produtos Qtd' =
+			
+			IF(
+			    ISBLANK([Produtos Qtd]),
+			    BLANK(),
+			    FORMAT([Produtos Qtd], "#,##0")
+			)
+		displayFolder: Resgates
+		lineageTag: aeef42ab-a12a-4ba9-a14c-f3b535c32006
+
+	measure 'Produtos VAR' = ```
+			
+			VAR DataMax = MAX(dCalendario[Date])
+			VAR DataMin = MIN(dCalendario[Date])
+			VAR Dias = DATEDIFF(DataMin, DataMax, DAY) + 1
+			VAR DataMinAnt = DataMin - Dias
+			VAR DataMaxAnt = DataMin - 1
+			
+			VAR ValorAtual = [Produtos Valor]
+			VAR ValorAnterior = 
+			    CALCULATE(
+			        [Produtos Valor],
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] >= DataMinAnt && dCalendario[Date] <= DataMaxAnt
+			    )
+			    
+			VAR Variacao = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+			VAR Seta = IF(Variacao > 0, "▲", IF(Variacao < 0, "▼", "►"))
+			
+			RETURN
+			    IF(
+			        ISBLANK(ValorAnterior), 
+			        "-", 
+			        Seta & " " & FORMAT(ABS(Variacao), "0%")
+			    )
+			```
+		displayFolder: Resgates
+		lineageTag: ccbcd70c-6c1a-46bc-b371-0aede53a768e
+
+	measure 'Resgates VAR' = ```
+			
+			VAR DataMax = MAX(dCalendario[Date])
+			VAR DataMin = MIN(dCalendario[Date])
+			VAR Dias = DATEDIFF(DataMin, DataMax, DAY) + 1
+			VAR DataMinAnt = DataMin - Dias
+			VAR DataMaxAnt = DataMin - 1
+			
+			VAR ValorAtual = [Resgates Valor]
+			VAR ValorAnterior = 
+			    CALCULATE(
+			        [Resgates Valor],
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] >= DataMinAnt && dCalendario[Date] <= DataMaxAnt
+			    )
+			    
+			VAR Variacao = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+			VAR Seta = IF(Variacao > 0, "▲", IF(Variacao < 0, "▼", "►"))
+			
+			RETURN
+			    IF(
+			        ISBLANK(ValorAnterior), 
+			        "-", 
+			        Seta & " " & FORMAT(ABS(Variacao), "0%")
+			    )
+			```
+		displayFolder: Resgates
+		lineageTag: 6bd9ae17-b61a-4c88-865d-523b174ffff9
+
+	measure 'Usuários Resgatando VAR' = ```
+			
+			VAR DataMax = MAX(dCalendario[Date])
+			VAR DataMin = MIN(dCalendario[Date])
+			VAR Dias = DATEDIFF(DataMin, DataMax, DAY) + 1
+			VAR DataMinAnt = DataMin - Dias
+			VAR DataMaxAnt = DataMin - 1
+			
+			VAR ValorAtual = [Usuários Resgatando]
+			VAR ValorAnterior = 
+			    CALCULATE(
+			        [Usuários Resgatando],
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] >= DataMinAnt && dCalendario[Date] <= DataMaxAnt
+			    )
+			    
+			VAR Variacao = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+			VAR Seta = IF(Variacao > 0, "▲", IF(Variacao < 0, "▼", "►"))
+			
+			RETURN
+			    IF(
+			        ISBLANK(ValorAnterior), 
+			        "-", 
+			        Seta & " " & FORMAT(ABS(Variacao), "0%")
+			    )
+			```
+		displayFolder: Resgates
+		lineageTag: 25dd5e68-ef14-442b-8067-da5f8ceb3d16
+
+	measure 'Boleto VAR' = ```
+			
+			VAR DataMax = MAX(dCalendario[Date])
+			VAR DataMin = MIN(dCalendario[Date])
+			VAR Dias = DATEDIFF(DataMin, DataMax, DAY) + 1
+			VAR DataMinAnt = DataMin - Dias
+			VAR DataMaxAnt = DataMin - 1
+			
+			VAR ValorAtual = [Boleto Valor]
+			VAR ValorAnterior = 
+			    CALCULATE(
+			        [Boleto Valor],
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] >= DataMinAnt && dCalendario[Date] <= DataMaxAnt
+			    )
+			    
+			VAR Variacao = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+			VAR Seta = IF(Variacao > 0, "▲", IF(Variacao < 0, "▼", "►"))
+			
+			RETURN
+			    IF(
+			        ISBLANK(ValorAnterior), 
+			        "-", 
+			        Seta & " " & FORMAT(ABS(Variacao), "0%")
+			    )
+			```
+		displayFolder: Resgates
+		lineageTag: 4fdd8b61-bb5e-498a-8533-ad50374f38f4
+
+	measure 'PIX VAR' = ```
+			
+			VAR DataMax = MAX(dCalendario[Date])
+			VAR DataMin = MIN(dCalendario[Date])
+			VAR Dias = DATEDIFF(DataMin, DataMax, DAY) + 1
+			VAR DataMinAnt = DataMin - Dias
+			VAR DataMaxAnt = DataMin - 1
+			
+			VAR ValorAtual = [Pedido Pix Valor]
+			VAR ValorAnterior = 
+			    CALCULATE(
+			        [Pedido Pix Valor],
+			        REMOVEFILTERS(dCalendario),
+			        dCalendario[Date] >= DataMinAnt && dCalendario[Date] <= DataMaxAnt
+			    )
+			    
+			VAR Variacao = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+			VAR Seta = IF(Variacao > 0, "▲", IF(Variacao < 0, "▼", "►"))
+			
+			RETURN
+			    IF(
+			        ISBLANK(ValorAnterior), 
+			        "-", 
+			        Seta & " " & FORMAT(ABS(Variacao), "0%")
+			    )
+			```
+		displayFolder: Resgates
+		lineageTag: 9f129543-18c2-4d4c-8096-aae4aa3c2a91
+
+	measure 'Resgates Total (Ajustado)' =
+			
+			IF(
+			    ISFILTERED(fPedido_item[Store]),
+			    -- Quando Loja está selecionada: mostra só o que vem de fPedido_item
+			    [Produtos Valor] + [Viagens Qtd],
+			    -- Quando não há filtro de Loja: mostra tudo normalmente
+			    [Resgates Valor]
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Resgates
+		lineageTag: 1873ee0f-2df4-4309-95d3-1cad662d8cf6
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column Value
+		isHidden
+		formatString: 0
+		lineageTag: ecc722a4-dfa1-46c0-af8c-ebff890ebfe4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medidas = calculated
+		mode: import
+		source = {0}
+
+	annotation PBI_Id = 5e6b0bd3f48b41d8b854b40e59324cd4
+

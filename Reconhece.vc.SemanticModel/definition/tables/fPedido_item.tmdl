@@ -1,0 +1,370 @@
+table fPedido_item
+	lineageTag: 8d581d2b-3937-47bf-a231-0fff2fb4ff37
+
+	column id_Campaign
+		dataType: int64
+		formatString: 0
+		lineageTag: 93c66394-c537-47eb-81c4-43a8173f43a6
+		summarizeBy: none
+		sourceColumn: id_Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign
+		dataType: string
+		lineageTag: d1fb821b-bc06-4fc1-bfb5-344ebeaadb00
+		summarizeBy: none
+		sourceColumn: Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantName
+		dataType: string
+		lineageTag: e3439068-b52c-4df9-9423-2b2a74225488
+		summarizeBy: none
+		sourceColumn: ParticipantName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantCPFCNPJ
+		dataType: string
+		lineageTag: 87020c06-3602-4560-9f63-8f9f77eccb7b
+		summarizeBy: none
+		sourceColumn: ParticipantCPFCNPJ
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantEmail
+		dataType: string
+		lineageTag: 396b5609-7714-49b0-aa43-682ec3dc590d
+		summarizeBy: none
+		sourceColumn: ParticipantEmail
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResponsibleCPFCNPJ
+		dataType: string
+		lineageTag: 0fff80d7-2300-4b61-988b-ef1ac28ad082
+		summarizeBy: none
+		sourceColumn: ResponsibleCPFCNPJ
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 98b4c832-b928-4da4-99cf-4626560b6c87
+		summarizeBy: sum
+		sourceColumn: OrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierOrderNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: a56b454e-7061-4e44-ac25-0d27d57c798a
+		summarizeBy: sum
+		sourceColumn: SupplierOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store
+		dataType: string
+		lineageTag: 5f4cfbd1-266d-4ee2-8d39-61fec7dce5dc
+		summarizeBy: none
+		sourceColumn: Store
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConversionFactor
+		dataType: double
+		lineageTag: c53caf90-9a9b-450e-9f54-25348f7fed79
+		summarizeBy: sum
+		sourceColumn: ConversionFactor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PaymentMethod
+		dataType: string
+		lineageTag: f11a151d-e0d8-4bc1-b34a-c03b240f9419
+		summarizeBy: none
+		sourceColumn: PaymentMethod
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsConfirmed
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 62b4e077-327d-4e86-91f0-4812995ee499
+		summarizeBy: none
+		sourceColumn: IsConfirmed
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalShippingInMoney
+		dataType: double
+		lineageTag: a78738e8-e20b-42c0-8459-176005674828
+		summarizeBy: sum
+		sourceColumn: TotalShippingInMoney
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalShippingInPoints
+		dataType: double
+		lineageTag: f919c443-dc08-45cc-8222-b22a52285206
+		summarizeBy: sum
+		sourceColumn: TotalShippingInPoints
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalPaidInPoints
+		dataType: double
+		lineageTag: 1790e657-5372-4ca5-abae-9c2d2a18eec5
+		summarizeBy: sum
+		sourceColumn: TotalPaidInPoints
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalPaidInPointsRounded
+		dataType: double
+		lineageTag: cf0b35ef-a5a4-4571-a610-ed0437cfedd8
+		summarizeBy: sum
+		sourceColumn: TotalPaidInPointsRounded
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalComplementAmountInMoney
+		dataType: double
+		lineageTag: ef4c93f1-1d0f-4476-9936-f913aec93b4c
+		summarizeBy: sum
+		sourceColumn: TotalComplementAmountInMoney
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SkuCode
+		dataType: string
+		lineageTag: bfb258e5-75f2-4fe4-a877-d13f4a8f7e0d
+		summarizeBy: none
+		sourceColumn: SkuCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: 8a3f7a30-2a93-49e1-89ad-f18ea754da62
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsCancelled
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f5083ec7-f93e-46c6-9734-e6c3406fa7a0
+		summarizeBy: none
+		sourceColumn: IsCancelled
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: 91078e24-92c2-437e-b23a-397851aea8e9
+		summarizeBy: none
+		sourceColumn: Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: ccb35eec-2cbe-4dfe-9912-98cfc4242ba8
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPriceInMoney
+		dataType: double
+		lineageTag: a36a00cf-aedb-4847-b19f-755c004794b2
+		summarizeBy: sum
+		sourceColumn: UnitPriceInMoney
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UnitPriceInPoints
+		dataType: double
+		lineageTag: ceff3689-d4cb-4b3e-a593-13b69dc43b1c
+		summarizeBy: sum
+		sourceColumn: UnitPriceInPoints
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ItemShippingInMoney
+		dataType: double
+		lineageTag: b5157f41-9529-4e36-8b17-3988772f34fb
+		summarizeBy: sum
+		sourceColumn: ItemShippingInMoney
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ItemShippingInPoints
+		dataType: double
+		lineageTag: b7b90396-6b56-4df5-97f1-498a792f8f58
+		summarizeBy: sum
+		sourceColumn: ItemShippingInPoints
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ItemTotalInMoney
+		dataType: double
+		lineageTag: 04ed77d5-b129-496f-a4b4-f192b3c3ff76
+		summarizeBy: sum
+		sourceColumn: ItemTotalInMoney
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ItemTotalInPoints
+		dataType: double
+		lineageTag: 458f29dc-dd73-475b-8c87-3480f5d06414
+		summarizeBy: sum
+		sourceColumn: ItemTotalInPoints
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DeliveryStatus
+		dataType: string
+		lineageTag: 25b54400-3a11-4f06-9af4-4992cfdd8d62
+		summarizeBy: none
+		sourceColumn: DeliveryStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column ItemSystemStatus
+		dataType: string
+		lineageTag: bb922032-6cc0-44a1-b0e7-e086534d469f
+		summarizeBy: none
+		sourceColumn: ItemSystemStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderSystemStatus
+		dataType: string
+		lineageTag: 079a5086-bcee-47d7-b988-7d7c1c89efa8
+		summarizeBy: none
+		sourceColumn: OrderSystemStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedAt
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a37ce95a-803b-49db-83d1-b8f32b14f02b
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column AddressZipCode
+		dataType: string
+		lineageTag: cf67701b-c3f9-41c7-9f5e-c6df62a04283
+		summarizeBy: none
+		sourceColumn: AddressZipCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressStreet
+		dataType: string
+		lineageTag: 959ad8af-8f60-43fb-b127-b7d43ca4fed2
+		summarizeBy: none
+		sourceColumn: AddressStreet
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressNumber
+		dataType: string
+		lineageTag: 9a70ff28-ed42-4ca1-afab-a98da35def8a
+		summarizeBy: none
+		sourceColumn: AddressNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressDistrict
+		dataType: string
+		lineageTag: fd7501be-c146-4c85-b5ce-e0b4a4a12958
+		summarizeBy: none
+		sourceColumn: AddressDistrict
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressCity
+		dataType: string
+		lineageTag: e73ae134-f73d-43c8-abed-a33bb1f692c9
+		summarizeBy: none
+		sourceColumn: AddressCity
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressState
+		dataType: string
+		lineageTag: 99e2740b-0b52-46bd-89a2-074d273d4701
+		summarizeBy: none
+		sourceColumn: AddressState
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressComplement
+		dataType: string
+		lineageTag: ad4a861f-2700-4fd7-9ba2-4c5b61bdc399
+		summarizeBy: none
+		sourceColumn: AddressComplement
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressContactName
+		dataType: string
+		lineageTag: d2a5d0d1-8837-4fc1-b02d-5466df8f6ee8
+		summarizeBy: none
+		sourceColumn: AddressContactName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fPedido_item = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd", [Query="SELECT#(lf)#(tab)    c.id as 'id_Campaign',#(lf)        c.Nome as 'Campaign',#(lf)#(lf)        -- Participant Information#(lf)        ds.Nome as 'ParticipantName',#(lf)        ds.CPFCNPJ as 'ParticipantCPFCNPJ',#(lf)        ds.Email as 'ParticipantEmail',#(lf)        ds.CPFCNPJResposavel as 'ResponsibleCPFCNPJ',#(lf)#(lf)        -- Order Information#(lf)        p.PedidoParceiro as 'OrderNumber',#(lf)        p.CodigoPedido as 'SupplierOrderNumber',#(lf)        l.Nome as 'Store',#(lf)        p.FatorConversao as 'ConversionFactor',#(lf)        v.Nome as 'PaymentMethod',#(lf)        p.Confirmado as 'IsConfirmed',#(lf)        p.ValorFrete as 'TotalShippingInMoney',#(lf)        p.ValorFretePontos as 'TotalShippingInPoints',#(lf)        p.ValorPagoEmPontos as 'TotalPaidInPoints',#(lf)        CEILING(p.ValorPagoEmPontos) as 'TotalPaidInPointsRounded',#(lf)        p.ValorPagoEmReais as 'TotalComplementAmountInMoney',#(lf)#(lf)        -- Product Information#(lf)        pp.CodigoSKU as 'SkuCode',#(lf)        pp.Nome as 'ProductName',#(lf)        pp.Cancelado as 'IsCancelled',#(lf)        pp.Modelo as 'Model',#(lf)        pp.Quantidade as 'Quantity',#(lf)        pp.ValorUnitario as 'UnitPriceInMoney',#(lf)        pp.ValorUnitarioPontos as 'UnitPriceInPoints',#(lf)        pp.ValorTotalFrete as 'ItemShippingInMoney',#(lf)        pp.ValorTotalFretePontos as 'ItemShippingInPoints',#(lf)        pp.ValorTotal as 'ItemTotalInMoney',#(lf)        pp.ValorTotalPontos as 'ItemTotalInPoints',#(lf)        pp.StatusEntrega as 'DeliveryStatus',#(lf)        stitem.DescricaoExibicao as 'ItemSystemStatus',#(lf)        stpedido.DescricaoExibicao as 'OrderSystemStatus',#(lf)        p.DataCadastro as 'CreatedAt',#(lf)#(lf)        -- Address Information#(lf)        ent.CEP as 'AddressZipCode',#(lf)        ent.Logradouro as 'AddressStreet',#(lf)        ent.Numero as 'AddressNumber',#(lf)        ent.Bairro as 'AddressDistrict',#(lf)        ent.Cidade as 'AddressCity',#(lf)        ent.Estado as 'AddressState',#(lf)        ent.Complemento as 'AddressComplement',#(lf)        ent.NomeResponsavel as 'AddressContactName'#(lf)#(lf)    FROM dbo.pedido p#(lf)        INNER JOIN dbo.ProdutoPedido pp ON pp.PedidoId = p.Id#(lf)        INNER JOIN dbo.Campanha c ON c.Id = p.CampanhaId#(lf)        INNER JOIN dbo.Destinatario ds ON ds.Id = p.Destinatarioid#(lf)        INNER JOIN dbo.Situacao stpedido ON stpedido.Id = p.SituacaoId#(lf)        INNER JOIN dbo.Situacao stitem ON stitem.Id = pp.SituacaoId#(lf)        INNER JOIN dbo.Valor v ON v.Id = p.FormaPagamentoId#(lf)        INNER JOIN dbo.EnderecoEntregaPedido ent ON ent.Id = p.EnderecoEntregaPedidoId#(lf)        INNER JOIN dbo.Loja l ON l.id = p.LojaId#(lf)    WHERE p.Ativo = 1#(lf)        AND pp.Ativo = 1#(lf)        AND pp.Cancelado <> 1#(lf)    ORDER BY p.DataCadastro DESC, p.Id, pp.Id"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"CreatedAt", type date}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado", each [CreatedAt] > #date(2021, 12, 31))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

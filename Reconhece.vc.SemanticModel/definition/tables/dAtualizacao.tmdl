@@ -1,0 +1,32 @@
+table dAtualizacao
+	lineageTag: 1293eec0-ec2e-498a-a220-8e4d123fe585
+
+	column DataRefresh
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7ca37e83-6c46-47f8-9dc4-e53febf7288f
+		summarizeBy: none
+		sourceColumn: DataRefresh
+
+		variation Variation
+			isDefault
+			relationship: 3dea2ad8-c9c8-4e27-ace4-b705b195225b
+			defaultHierarchy: LocalDateTable_0253f98c-2cc3-4399-a2fa-ed6c60009002.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dAtualizacao = m
+		mode: import
+		source =
+				let
+				    DataHoraUTC = DateTimeZone.UtcNow(),
+				    FusoHorarioBR = DateTimeZone.SwitchZone(DataHoraUTC, -3),
+				    DataHoraLimpa = DateTime.From(FusoHorarioBR),
+				    TabelaRefresh = #table(type table [DataRefresh = datetime], {{DataHoraLimpa}})
+				in
+				    TabelaRefresh
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

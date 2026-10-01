@@ -1,0 +1,43 @@
+table dUsuarioCampanha
+	lineageTag: e266b3ac-a5ee-4785-bc24-6bc410d04654
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: d06e9af0-93c0-41ae-aaf7-3815171423a3
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column UsuarioId
+		dataType: int64
+		formatString: 0
+		lineageTag: fb4c14ef-05b0-4286-8283-db6e3643f755
+		summarizeBy: none
+		sourceColumn: UsuarioId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampanhaId
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ddd76b6-7b9d-4bea-a113-86463629e23e
+		summarizeBy: none
+		sourceColumn: CampanhaId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dUsuarioCampanha = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd", [Query="SELECT Id, UsuarioId, CampanhaId FROM dbo.UsuarioCampanha"]),
+				    dbo_UsuarioCampanha = Fonte
+				in
+				    dbo_UsuarioCampanha
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

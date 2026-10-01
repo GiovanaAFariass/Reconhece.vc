@@ -1,0 +1,87 @@
+table fViagem
+	lineageTag: 53b4aa18-c4c5-405f-a0fd-163350d88af1
+
+	column id_Campaign
+		dataType: int64
+		formatString: 0
+		lineageTag: 5fe4f44f-17fb-46d1-a4d9-43a63e4fcceb
+		summarizeBy: none
+		sourceColumn: id_Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign
+		dataType: string
+		lineageTag: 219246e6-ba1e-46d8-9c34-f5c1952b00f1
+		summarizeBy: none
+		sourceColumn: Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantCPF
+		dataType: string
+		lineageTag: b92381ae-6a62-4506-92f3-0fd40c64f37e
+		summarizeBy: none
+		sourceColumn: ParticipantCPF
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderCode
+		dataType: string
+		lineageTag: b73da6b8-1c31-45e9-b07c-2a00ef590a4c
+		summarizeBy: none
+		sourceColumn: OrderCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequestNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b8e50a0-0cd8-457e-b930-48db7665f552
+		summarizeBy: sum
+		sourceColumn: RequestNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column PointsQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e0c7c95-3bc9-41f9-8d7b-94147bbb2fd3
+		summarizeBy: sum
+		sourceColumn: PointsQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 18e4ae16-209e-4959-a0e9-4fd564156723
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedAt
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 2e8ebb78-4bf3-4d6d-92e7-813185854840
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition fViagem = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd", [Query="SELECT#(lf)#(tab)    c.id as 'id_Campaign',#(lf)        c.Nome as 'Campaign',#(lf)        aps.CPF as 'ParticipantCPF',#(lf)        ap.CodigoPedido as 'OrderCode',#(lf)        ap.NumeroSolicitacao as 'RequestNumber',#(lf)        ap.QtdPonto as 'PointsQuantity',#(lf)        s.Descricao as 'Status',#(lf)        ap.DataCadastro as 'CreatedAt'#(lf)#(lf)    FROM dbo.ApiPedido ap#(lf)        INNER JOIN ApiSessao aps ON aps.Id = ap.ApiSessaoId#(lf)        LEFT JOIN dbo.Campanha c ON c.Id = aps.CampanhaId#(lf)        LEFT JOIN dbo.Situacao s ON ap.SituacaoId = s.Id#(lf)    ORDER BY ap.DataCadastro DESC, ap.Id"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"CreatedAt", type date}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado", each [CreatedAt] > #date(2021, 12, 31))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

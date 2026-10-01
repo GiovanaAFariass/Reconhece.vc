@@ -1,0 +1,47 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["dUsuarioCampanha","dUsuario","dCampanha","fLogAcesso","fSiteAcesso","fBoleto","fCartao_recarga","fNovos_cartoes_recarga","fViagem","fPedido","fPedido_item","fPedidoPix","fPedido_recarga_mobile_topup","fPonto","dAtualizacao","Client_URL"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table DateTableTemplate_c2aabc30-ac23-445d-b2ad-b9d225f611fa
+ref table fSiteAcesso
+ref table dCampanha
+ref table LocalDateTable_7f50222e-a672-4891-b6a3-3e1aad693e08
+ref table LocalDateTable_702c23d2-6b79-4a8b-b47a-5b1409bd0e2e
+ref table dUsuarioCampanha
+ref table dUsuario
+ref table LocalDateTable_1679d504-b958-4c57-abca-749c0b535fc6
+ref table LocalDateTable_59803864-996a-4df8-9305-b295317395be
+ref table LocalDateTable_a4a13359-4ff4-460b-8d57-ddc2ef8734a4
+ref table LocalDateTable_4a553ca1-290e-4d20-9d3b-a4e462692b18
+ref table Medidas
+ref table dCalendario
+ref table LocalDateTable_03e03fbf-993f-423f-8fa9-344dd7378407
+ref table fBoleto
+ref table fCartao_recarga
+ref table fNovos_cartoes_recarga
+ref table fViagem
+ref table fPedido_item
+ref table fPedido_recarga_mobile_topup
+ref table fPedidoPix
+ref table LocalDateTable_0918db37-669c-496d-a5f3-fb45e12912d3
+ref table LocalDateTable_c766d917-85dc-4b9d-9e76-e012030bfb13
+ref table LocalDateTable_69fcb17a-25c1-4863-a798-1bcda8dc7a84
+ref table dUsuariosResgates
+ref table fPonto
+ref table dAtualizacao
+ref table LocalDateTable_0253f98c-2cc3-4399-a2fa-ed6c60009002
+ref table LocalDateTable_0240e4b2-b615-487c-8755-ad71c622fb64
+ref table Client_URL
+
+ref cultureInfo pt-BR
+

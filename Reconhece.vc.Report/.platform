@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Reconhece.vc"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "cac8a311-459a-4572-8b34-623a60880dc7"
+  }
+}

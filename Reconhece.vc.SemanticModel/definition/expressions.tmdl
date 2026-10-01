@@ -1,0 +1,27 @@
+expression fLogAcesso =
+		let
+		    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd"),
+		    dbo_LogAcesso = Fonte{[Schema="dbo",Item="LogAcesso"]}[Data],
+		    #"Valor Substituído" = Table.ReplaceValue(dbo_LogAcesso,".","",Replacer.ReplaceText,{"CPF"}),
+		    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído","-","",Replacer.ReplaceText,{"CPF"}),
+		    #"Valor Substituído2" = Table.ReplaceValue(#"Valor Substituído1","/","",Replacer.ReplaceText,{"CPF"})
+		in
+		    #"Valor Substituído2"
+	lineageTag: 090e3339-49e9-4b79-a49a-9d2142bcbeea
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression fPedido =
+		let
+		    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd", [Query="SELECT DISTINCT#(lf)#(tab)    c.id as 'id_Campaign',#(lf)        c.Nome as 'Campaign',#(lf)#(lf)        -- Participant Information#(lf)        ds.Nome as 'ParticipantName',#(lf)        ds.CPFCNPJ as 'ParticipantCPFCNPJ',#(lf)        ds.Email as 'ParticipantEmail',#(lf)        ds.CPFCNPJResposavel as 'ResponsibleCPFCNPJ',#(lf)#(lf)        -- Order Information#(lf)        p.PedidoParceiro as 'OrderNumber',#(lf)        p.CodigoPedido as 'SupplierOrderNumber',#(lf)        l.Nome as 'Store',#(lf)        p.FatorConversao as 'ConversionFactor',#(lf)        v.Nome as 'PaymentMethod',#(lf)        p.Confirmado as 'IsConfirmed',#(lf)        p.ValorFrete as 'TotalShippingInMoney',#(lf)        p.ValorFretePontos as 'TotalShippingInPoints',#(lf)        p.ValorPagoEmPontos as 'TotalPaidInPoints',#(lf)        CEILING(p.ValorPagoEmPontos) as 'TotalPaidInPointsRounded',#(lf)        p.ValorPagoEmReais as 'TotalComplementAmountInMoney',#(lf)        stpedido.DescricaoExibicao as 'OrderSystemStatus',#(lf)        p.DataCadastro as 'CreatedAt',#(lf)#(lf)        -- Address Information#(lf)        ent.CEP as 'AddressZipCode',#(lf)        ent.Logradouro as 'AddressStreet',#(lf)        ent.Numero as 'AddressNumber',#(lf)        ent.Bairro as 'AddressDistrict',#(lf)        ent.Cidade as 'AddressCity',#(lf)        ent.Estado as 'AddressState',#(lf)        ent.Complemento as 'AddressComplement',#(lf)        ent.NomeResponsavel as 'AddressContactName',#(lf)#(lf)        -- Include ordering columns for DISTINCT#(lf)        p.Id as 'OrderId'#(lf)#(lf)    FROM dbo.pedido p#(lf)        INNER JOIN dbo.ProdutoPedido pp ON pp.PedidoId = p.Id#(lf)        INNER JOIN dbo.Campanha c ON c.Id = p.CampanhaId#(lf)        INNER JOIN dbo.Destinatario ds ON ds.Id = p.Destinatarioid#(lf)        INNER JOIN dbo.Situacao stpedido ON stpedido.Id = p.SituacaoId#(lf)        INNER JOIN dbo.Valor v ON v.Id = p.FormaPagamentoId#(lf)        INNER JOIN dbo.EnderecoEntregaPedido ent ON ent.Id = p.EnderecoEntregaPedidoId#(lf)        INNER JOIN dbo.Loja l ON l.id = p.LojaId#(lf)    WHERE p.Ativo = 1#(lf)        AND pp.Ativo = 1#(lf)        AND pp.Cancelado <> 1#(lf)    ORDER BY p.DataCadastro DESC, p.Id"]),
+		    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"CreatedAt", type date}})
+		in
+		    #"Tipo Alterado"
+	lineageTag: 4e9fd266-c550-4898-916e-a4f0f97df4f4
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

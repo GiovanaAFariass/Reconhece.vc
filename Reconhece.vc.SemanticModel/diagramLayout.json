@@ -1,0 +1,540 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "Medidas",
+          "nodeLineageTag": "5b743e54-c36e-4285-8664-8dba818a6747",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 1307.1371498942256,
+            "y": 1021.0924383535627
+          },
+          "nodeIndex": "dCalendario",
+          "nodeLineageTag": "3635de2e-e096-4434-a715-4266adac73fb",
+          "size": {
+            "height": 197.1433379022194,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 3521.6577126476072,
+            "y": 644.0535573096879
+          },
+          "nodeIndex": "dUsuariosResgates",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 3805.6577126476072,
+            "y": 594.0535573096879
+          },
+          "nodeIndex": "fPonto",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 2540.6424054298809,
+            "y": 587.03724309396455
+          },
+          "nodeIndex": "fSiteAcesso",
+          "size": {
+            "height": 198,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1314.0031219322484,
+            "y": 125.53713506883992
+          },
+          "nodeIndex": "dCampanha",
+          "size": {
+            "height": 253.9922102440155,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 2376.8455178584459,
+            "y": 0
+          },
+          "nodeIndex": "dUsuarioCampanha",
+          "size": {
+            "height": 170.17057873790441,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 556.1227745100482,
+            "y": 1318.139918222819
+          },
+          "nodeIndex": "dUsuario",
+          "size": {
+            "height": 169.96719639655686,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 568,
+            "y": 522.47652055186836
+          },
+          "nodeIndex": "fBoleto",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 522.47652055186836
+          },
+          "nodeIndex": "fCartao_recarga",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1153.71561,
+            "y": 522.47652055186836
+          },
+          "nodeIndex": "fNovos_cartoes_recarga",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 536.47652055186836
+          },
+          "nodeIndex": "fViagem",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1704,
+            "y": 522.47652055186836
+          },
+          "nodeIndex": "fPedido_item",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 1970.522962522411,
+            "y": 522.72965638552364
+          },
+          "nodeIndex": "fPedido_recarga_mobile_topup",
+          "size": {
+            "height": 304.74030344565631,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 2277.5571105071654,
+            "y": 263.58486074599051
+          },
+          "nodeIndex": "fPedidoPix",
+          "nodeLineageTag": "0f212cd6-8b5c-4c6f-838f-fd3a34e3eebf",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 4089.6577126476072,
+            "y": 692.0535573096879
+          },
+          "nodeIndex": "dAtualizacao",
+          "nodeLineageTag": "1293eec0-ec2e-498a-a220-8e4d123fe585",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 4373.6577126476077,
+            "y": 668.0535573096879
+          },
+          "nodeIndex": "Client_URL",
+          "nodeLineageTag": "778af56d-30a7-4c58-9c1c-d92f533fce3a",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 14
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 39.253481508302443,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 92.662731010906867,
+            "y": 0
+          },
+          "nodeIndex": "dCalendario",
+          "nodeLineageTag": "3635de2e-e096-4434-a715-4266adac73fb",
+          "size": {
+            "height": 227.75716784054106,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 472.45024341707995,
+            "y": 499.11803185559211
+          },
+          "nodeIndex": "fSiteAcesso",
+          "size": {
+            "height": 211.514335681082,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 810.87965636850834,
+            "y": 387.52006645685174
+          },
+          "nodeIndex": "dCampanha",
+          "size": {
+            "height": 203.6138299383216,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 775.33792434912084,
+            "y": 0
+          },
+          "nodeIndex": "dUsuarioCampanha",
+          "size": {
+            "height": 228.89544831515525,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 452.26707724595917,
+            "y": 0
+          },
+          "nodeIndex": "dUsuario",
+          "size": {
+            "height": 225.735246018051,
+            "width": 234
+          },
+          "zIndex": 3
+        }
+      ],
+      "name": "Acessos",
+      "zoomValue": 50.346892102823148,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 167.77955216547736,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 112.41799099139175,
+            "y": 158.09480518437206
+          },
+          "nodeIndex": "dCalendario",
+          "nodeLineageTag": "3635de2e-e096-4434-a715-4266adac73fb",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1750.9472254848918,
+            "y": 851.2567434295006
+          },
+          "nodeIndex": "dUsuariosResgates",
+          "nodeLineageTag": "f47dfb7c-432f-43c3-9637-018dc7ca4f58",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1622.0154142222209,
+            "y": 0
+          },
+          "nodeIndex": "dCampanha",
+          "nodeLineageTag": "1c449659-0fff-439f-9407-1b144a52f65b",
+          "size": {
+            "height": 175.16401801721631,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1018.9346729047841,
+            "y": 853.249309133836
+          },
+          "nodeIndex": "dUsuario",
+          "nodeLineageTag": "050d7d8f-6cd7-495e-a473-37dbb0805ba2",
+          "size": {
+            "height": 195.13777513446166,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2115.4682928746165,
+            "y": 309.46858162421853
+          },
+          "nodeIndex": "fBoleto",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1556.2030935917494,
+            "y": 319.455460182842
+          },
+          "nodeIndex": "fCartao_recarga",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1845.8225717918076,
+            "y": 326.94561910180903
+          },
+          "nodeIndex": "fViagem",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 717.30529466744269,
+            "y": 314.46202090353063
+          },
+          "nodeIndex": "fPedido_item",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 984.95363241914515,
+            "y": 324.44889946215267
+          },
+          "nodeIndex": "fPedido_recarga_mobile_topup",
+          "nodeLineageTag": "3d9493bc-325d-4a8b-97a9-c7c14ee0b393",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1269.0803350313465,
+            "y": 319.455460182842
+          },
+          "nodeIndex": "fPedidoPix",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 439.67006883288468,
+            "y": 331.93905838111965
+          },
+          "nodeIndex": "fNovos_cartoes_recarga",
+          "nodeLineageTag": "e3c9fc88-2adf-4204-a49a-e6d4a906111c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Resgates",
+      "zoomValue": 40.052554724883443,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 3,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 125.20000076293945,
+            "y": 95
+          },
+          "nodeIndex": "dCalendario",
+          "nodeLineageTag": "3635de2e-e096-4434-a715-4266adac73fb",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 640.552442034848,
+            "y": 91.3153471666033
+          },
+          "nodeIndex": "fPonto",
+          "nodeLineageTag": "0679f895-b98c-414f-a09b-eda54873d9f2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1102.4188620994037,
+            "y": 23.507586141407664
+          },
+          "nodeIndex": "dCampanha",
+          "nodeLineageTag": "1c449659-0fff-439f-9407-1b144a52f65b",
+          "size": {
+            "height": 220.99494257239485,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 683.37201193467206,
+            "y": 524.5733516088776
+          },
+          "nodeIndex": "dUsuario",
+          "nodeLineageTag": "050d7d8f-6cd7-495e-a473-37dbb0805ba2",
+          "size": {
+            "height": 246.27656094922855,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1089.7780529109868,
+            "y": 508.598638746903
+          },
+          "nodeIndex": "dUsuarioCampanha",
+          "nodeLineageTag": "e266b3ac-a5ee-4785-bc24-6bc410d04654",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Pontos",
+      "zoomValue": 63.287087723234194,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

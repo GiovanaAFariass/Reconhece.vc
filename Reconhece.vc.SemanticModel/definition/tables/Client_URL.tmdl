@@ -1,0 +1,42 @@
+table Client_URL
+	lineageTag: 778af56d-30a7-4c58-9c1c-d92f533fce3a
+
+	column ClientID
+		dataType: int64
+		formatString: 0
+		lineageTag: 40acb76a-2ce6-41f8-80e6-29b24a732dba
+		summarizeBy: none
+		sourceColumn: ClientID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Cliente'
+		dataType: string
+		lineageTag: d2f8bf61-99e5-413b-b29f-0d96d772363a
+		summarizeBy: none
+		sourceColumn: Nome Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column URL
+		dataType: string
+		lineageTag: 0f07efd5-7114-4983-948e-d9e4dee30e1d
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: URL
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Client_URL = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("tdLdasIwFAfwVymF3Unjxz7q7opzIqwIDsagyDhLj01Ak3KSdn38JVWjD1BvQkia/+/0cIoink3jUbwAquTh4HbC2tq8Mkbwl1TSiua3MUhcK4vKJlwf2UrqFhRk70ASjGFbdLcCOSYtZ4R7wwRCadgRpGLn4MS0VbwbFfHTozPCi+G928uAPqcOykFJiEqMFqIhAsP18HpvPEzHJbolONc65r7V+eYObc43QXnxyrKuUZWa9sNbeIkOYtqPULb+zobXOMjOt9R9YjRxee1mOvOqCyWI3Jjdge6zfzhQMOfefFt/Lbef/l9PZ36kP5qu01ZyuJxOxhO3XRGoVloYvrjqnHwqbfcP", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [ClientID = _t, #"Nome Cliente" = _t, URL = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"ClientID", Int64.Type}, {"Nome Cliente", type text}, {"URL", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

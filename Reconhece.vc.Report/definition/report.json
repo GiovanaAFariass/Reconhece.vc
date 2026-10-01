@@ -1,0 +1,130 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY26SU02",
+      "reportVersionAtImport": {
+        "visual": "2.6.0",
+        "report": "3.1.0",
+        "page": "2.3.0"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Custom16358466382282677.json",
+      "reportVersionAtImport": {
+        "visual": "2.7.0",
+        "report": "3.2.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "publicCustomVisuals": [
+    "imageDB603108E3FF4EBFB8047F5653368E8C",
+    "htmlContent443BE3AD55E043BF878BED274D3A6855"
+  ],
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY26SU02",
+          "path": "BaseThemes/CY26SU02.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "Custom16358466382282677.json",
+          "path": "Custom16358466382282677.json",
+          "type": "Image"
+        },
+        {
+          "name": "Frame_1012383381332430887.svg",
+          "path": "Frame_1012383381332430887.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Frame_14568087154690147.svg",
+          "path": "Frame_14568087154690147.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Frame_16270023575176299.svg",
+          "path": "Frame_16270023575176299.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Frame_17152652124798405.svg",
+          "path": "Frame_17152652124798405.svg",
+          "type": "Image"
+        },
+        {
+          "name": "FundoBI_Acessos47302333469021873.png",
+          "path": "FundoBI_Acessos47302333469021873.png",
+          "type": "Image"
+        },
+        {
+          "name": "FundoBI_Pontos5923622288656359.png",
+          "path": "FundoBI_Pontos5923622288656359.png",
+          "type": "Image"
+        },
+        {
+          "name": "FundoBI_Resgates22607968263761102.png",
+          "path": "FundoBI_Resgates22607968263761102.png",
+          "type": "Image"
+        },
+        {
+          "name": "FundoBI_Resgates9901183626744433.png",
+          "path": "FundoBI_Resgates9901183626744433.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultFilterActionIsDataFilter": true,
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true,
+    "customMemoryLimit": "1048576",
+    "customTimeoutLimit": "225"
+  }
+}

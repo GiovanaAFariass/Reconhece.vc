@@ -1,0 +1,115 @@
+table fCartao_recarga
+	lineageTag: 9188c714-2414-4022-9e8f-1c98c9e9100d
+
+	column id_Campaign
+		dataType: int64
+		formatString: 0
+		lineageTag: c55e6264-49bb-489e-8756-9a58ad8e3d49
+		summarizeBy: none
+		sourceColumn: id_Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign
+		dataType: string
+		lineageTag: 6d9504f7-c4ba-4535-9eaa-2ee6314423d2
+		summarizeBy: none
+		sourceColumn: Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantName
+		dataType: string
+		lineageTag: 0d8cafa8-f497-43a0-b0bc-e081a32c1aff
+		summarizeBy: none
+		sourceColumn: ParticipantName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantCPF
+		dataType: string
+		lineageTag: a83f661e-f0a2-4737-8176-43c4a0f23cea
+		summarizeBy: none
+		sourceColumn: ParticipantCPF
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParticipantEmail
+		dataType: string
+		lineageTag: 4b3c0227-3d75-4199-ada1-8ed259db1828
+		summarizeBy: none
+		sourceColumn: ParticipantEmail
+
+		annotation SummarizationSetBy = Automatic
+
+	column RechargeAmount
+		dataType: double
+		lineageTag: a58fa66f-7910-47b6-84dd-1ed575c6acaf
+		summarizeBy: sum
+		sourceColumn: RechargeAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FeeAmount
+		dataType: double
+		lineageTag: d76820de-761d-488d-b12d-7118caafb145
+		summarizeBy: sum
+		sourceColumn: FeeAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PointsAmount
+		dataType: double
+		lineageTag: 315e7967-16f7-4c58-b3a8-ca2434ced540
+		summarizeBy: sum
+		sourceColumn: PointsAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Status
+		dataType: string
+		lineageTag: c628a06d-33a3-4ef9-b89d-304133579b23
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsCompleted
+		dataType: string
+		lineageTag: 51ee501e-c757-4fad-bde8-e8d2d1702ef8
+		summarizeBy: none
+		sourceColumn: IsCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedAt
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d16fe9f3-da91-4a4b-be1f-8d67358c68cf
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition fCartao_recarga = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("sdareconhece.digi.ag", "reconheceCitibankProd", [Query="SELECT#(lf)#(tab)    c.id as 'id_Campaign',#(lf)        c.Nome as 'Campaign',#(lf)        cs.Nome as 'ParticipantName',#(lf)        cs.CPF as 'ParticipantCPF',#(lf)        cs.Email as 'ParticipantEmail',#(lf)        CSR.Valor AS 'RechargeAmount',#(lf)        CSR.ValorTaxa AS 'FeeAmount',#(lf)        CSR.ValorPonto AS 'PointsAmount',#(lf)        S.Descricao AS 'Status',#(lf)        COALESCE(CSR.FlgRealizada, 'N') AS 'IsCompleted',#(lf)        CSR.DataCadastro AS 'CreatedAt'#(lf)#(lf)    FROM dbo.CartaoSolicitacao CS#(lf)        INNER JOIN dbo.Campanha C ON CS.CampanhaId = C.Id#(lf)        INNER JOIN dbo.CartaoSolicitacaoRecarga CSR ON CS.Id = CSR.CartaoSolicitacaoId#(lf)        LEFT JOIN dbo.Situacao S ON CSR.SituacaoId = S.Id#(lf)    ORDER BY CSR.DataCadastro DESC, CSR.Id"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"CreatedAt", type date}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado", each [CreatedAt] > #date(2021, 12, 31))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

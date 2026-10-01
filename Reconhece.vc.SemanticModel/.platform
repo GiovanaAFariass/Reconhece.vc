@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Reconhece.vc"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0a24ec5b-0977-4e51-a92c-d6a1dbe87368"
+  }
+}
